@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Pulse — Know Your Algorithm</title>
+<title>Pulse â€” Know Your Algorithm</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Lexend:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ─── TOKENS ─────────────────────────────────────────────── */
+/* â”€â”€â”€ TOKENS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 :root {
   --bg:        #060A14;
   --surface:   #0C1120;
@@ -26,7 +26,7 @@
   --trans:     all 0.22s cubic-bezier(.4,0,.2,1);
 }
 
-/* ─── RESET ──────────────────────────────────────────────── */
+/* â”€â”€â”€ RESET â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 html { height:100%; -webkit-tap-highlight-color:transparent; }
 body {
@@ -38,7 +38,7 @@ body {
   -webkit-font-smoothing:antialiased;
 }
 
-/* ─── GRAIN OVERLAY ──────────────────────────────────────── */
+/* â”€â”€â”€ GRAIN OVERLAY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 body::before {
   content:'';
   position:fixed; inset:0; z-index:0; pointer-events:none;
@@ -46,7 +46,7 @@ body::before {
   background-size:200px 200px; opacity:0.4;
 }
 
-/* ─── AMBIENT ORBS ───────────────────────────────────────── */
+/* â”€â”€â”€ AMBIENT ORBS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .orb {
   position:fixed; border-radius:50%; pointer-events:none; z-index:0;
   filter:blur(80px); opacity:0.18; animation:drift 20s ease-in-out infinite alternate;
@@ -56,13 +56,13 @@ body::before {
 .orb3 { width:300px; height:300px; background:radial-gradient(circle,#4AFF8C,transparent); top:50%; left:50%; transform:translate(-50%,-50%); animation-duration:30s; opacity:0.08; }
 @keyframes drift { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(30px,20px) scale(1.1)} }
 
-/* ─── MAIN WRAPPER ───────────────────────────────────────── */
+/* â”€â”€â”€ MAIN WRAPPER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #app { position:relative; z-index:1; min-height:100dvh; display:flex; flex-direction:column; }
 .screen { display:none; flex-direction:column; min-height:100dvh; animation:fadeUp 0.35s ease; }
 .screen.active { display:flex; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
 
-/* ─── NAV BAR ────────────────────────────────────────────── */
+/* â”€â”€â”€ NAV BAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .nav {
   display:flex; align-items:center; justify-content:space-between;
   padding:16px 20px; border-bottom:1px solid var(--border);
@@ -75,7 +75,7 @@ body::before {
 .nav-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); animation:pulse-dot 2s ease-in-out infinite; }
 @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
 
-/* ─── BUTTONS ────────────────────────────────────────────── */
+/* â”€â”€â”€ BUTTONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .btn {
   font-family:'Lexend',sans-serif; font-size:0.9rem; font-weight:500;
   padding:10px 20px; border-radius:var(--radius-sm);
@@ -95,7 +95,7 @@ body::before {
 .btn-full { width:100%; justify-content:center; }
 .btn:disabled { opacity:0.4; cursor:not-allowed; transform:none !important; }
 
-/* ─── INPUT ──────────────────────────────────────────────── */
+/* â”€â”€â”€ INPUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .input-group { display:flex; flex-direction:column; gap:6px; }
 .input-label { font-size:0.8rem; font-weight:500; color:var(--muted2); text-transform:uppercase; letter-spacing:0.06em; }
 .input {
@@ -108,52 +108,52 @@ body::before {
 .input::placeholder { color:var(--muted); }
 select.input option { background:var(--card); color:var(--text); }
 
-/* ─── CARD ───────────────────────────────────────────────── */
+/* â”€â”€â”€ CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .card {
   background:var(--card); border:1px solid var(--border);
   border-radius:var(--radius); padding:20px;
 }
 
-/* ─── BADGE ──────────────────────────────────────────────── */
+/* â”€â”€â”€ BADGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .badge {
   display:inline-flex; align-items:center; gap:5px;
   padding:4px 10px; border-radius:20px;
   font-size:0.75rem; font-weight:600;
 }
 
-/* ─── SCORE RING ─────────────────────────────────────────── */
+/* â”€â”€â”€ SCORE RING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .score-ring-wrap { position:relative; display:inline-flex; align-items:center; justify-content:center; }
 .score-ring-wrap svg { transform:rotate(-90deg); }
 .score-ring-center { position:absolute; text-align:center; }
 .score-num { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; line-height:1; }
 .score-label { font-size:0.65rem; color:var(--muted2); text-transform:uppercase; letter-spacing:0.06em; }
 
-/* ─── TABS ───────────────────────────────────────────────── */
+/* â”€â”€â”€ TABS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .tabs { display:flex; gap:4px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:4px; }
 .tab { flex:1; text-align:center; padding:8px; border-radius:7px; font-size:0.85rem; font-weight:500; cursor:pointer; transition:var(--trans); color:var(--muted2); }
 .tab.active { background:var(--card); color:var(--text); border:1px solid var(--border); }
 
-/* ─── STEP INDICATOR ─────────────────────────────────────── */
+/* â”€â”€â”€ STEP INDICATOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .steps { display:flex; align-items:center; gap:8px; }
 .step { width:28px; height:28px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:var(--muted); transition:var(--trans); flex-shrink:0; }
 .step.done { background:var(--accent); border-color:var(--accent); color:#020B0A; }
 .step.active { border-color:var(--accent); color:var(--accent); }
 .step-line { flex:1; height:1px; background:var(--border); }
 
-/* ─── INSIGHT CARD ───────────────────────────────────────── */
+/* â”€â”€â”€ INSIGHT CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .insight-card { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; background:var(--surface); border:1px solid var(--border); border-radius:10px; }
 .insight-icon { font-size:1.2rem; flex-shrink:0; margin-top:1px; }
 .insight-title { font-size:0.85rem; font-weight:600; margin-bottom:3px; }
 .insight-text { font-size:0.8rem; color:var(--muted2); line-height:1.5; }
 
-/* ─── VIDEO INPUT ROW ────────────────────────────────────── */
+/* â”€â”€â”€ VIDEO INPUT ROW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .video-row { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
 .video-row-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
 .video-num { font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--accent); font-weight:500; }
 .video-inputs { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
 @media(max-width:480px) { .video-inputs { grid-template-columns:1fr 1fr; } }
 
-/* ─── TOAST ──────────────────────────────────────────────── */
+/* â”€â”€â”€ TOAST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #toast {
   position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
   background:var(--card); border:1px solid var(--border); color:var(--text);
@@ -165,11 +165,11 @@ select.input option { background:var(--card); color:var(--text); }
 #toast.success { border-color:rgba(74,255,140,0.3); }
 #toast.error { border-color:rgba(255,87,87,0.3); }
 
-/* ─── LOADING SPINNER ────────────────────────────────────── */
+/* â”€â”€â”€ LOADING SPINNER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .spinner { width:20px; height:20px; border:2px solid rgba(255,255,255,0.1); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; }
 @keyframes spin { to{transform:rotate(360deg)} }
 
-/* ─── BOTTOM NAV ─────────────────────────────────────────── */
+/* â”€â”€â”€ BOTTOM NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .bottom-nav {
   position:fixed; bottom:0; left:0; right:0; z-index:100;
   background:rgba(6,10,20,0.9); backdrop-filter:blur(16px);
@@ -182,10 +182,10 @@ select.input option { background:var(--card); color:var(--text); }
 .bnav-item.active .bnav-label { color:var(--accent); }
 .bnav-item.active .bnav-icon { filter:drop-shadow(0 0 6px var(--accent)); }
 
-/* ─── SCROLLABLE CONTENT ─────────────────────────────────── */
+/* â”€â”€â”€ SCROLLABLE CONTENT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .content { flex:1; overflow-y:auto; padding:20px 20px 100px; max-width:560px; margin:0 auto; width:100%; }
 
-/* ─── STATE COLORS ───────────────────────────────────────── */
+/* â”€â”€â”€ STATE COLORS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .state-HOT    { color:var(--accent); }
 .state-BUILDING { color:var(--blue); }
 .state-COOLING  { color:var(--amber); }
@@ -195,7 +195,7 @@ select.input option { background:var(--card); color:var(--text); }
 .bg-COOLING { background:rgba(255,181,71,0.1); border-color:rgba(255,181,71,0.2); }
 .bg-RESET   { background:rgba(255,87,87,0.1); border-color:rgba(255,87,87,0.2); }
 
-/* ─── MISC ───────────────────────────────────────────────── */
+/* â”€â”€â”€ MISC â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .divider { height:1px; background:var(--border); margin:16px 0; }
 .mono { font-family:'JetBrains Mono',monospace; }
 .flex { display:flex; } .items-center { align-items:center; } .gap-2{gap:8px;} .gap-3{gap:12px;} .gap-4{gap:16px;}
@@ -210,7 +210,7 @@ select.input option { background:var(--card); color:var(--text); }
 .hidden { display:none !important; }
 .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 
-/* ─── AUTH SCREEN ────────────────────────────────────────── */
+/* â”€â”€â”€ AUTH SCREEN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #screen-auth .auth-hero {
   flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
   padding:40px 24px 20px;
@@ -226,7 +226,7 @@ select.input option { background:var(--card); color:var(--text); }
 .feature-item { display:flex; align-items:center; gap:10px; font-size:0.85rem; color:var(--muted2); }
 .feature-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); flex-shrink:0; }
 
-/* ─── DASHBOARD ──────────────────────────────────────────── */
+/* â”€â”€â”€ DASHBOARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .state-hero {
   padding:28px 20px; text-align:center;
   background:linear-gradient(180deg,rgba(74,255,140,0.04),transparent);
@@ -236,14 +236,14 @@ select.input option { background:var(--card); color:var(--text); }
 .state-headline { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; letter-spacing:-0.02em; margin-bottom:6px; }
 .state-sub { font-size:0.85rem; color:var(--muted2); max-width:280px; margin:0 auto; }
 
-/* ─── METRIC CHIPS ───────────────────────────────────────── */
+/* â”€â”€â”€ METRIC CHIPS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .metric-chips { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; }
 .metric-chips::-webkit-scrollbar { display:none; }
 .chip { flex-shrink:0; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 14px; }
 .chip-val { font-family:'JetBrains Mono',monospace; font-size:1rem; font-weight:500; }
 .chip-key { font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-top:2px; }
 
-/* ─── RECOMMENDATION CARD ────────────────────────────────── */
+/* â”€â”€â”€ RECOMMENDATION CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .rec-card {
   border-radius:16px; padding:20px; margin-bottom:16px;
   border:1px solid transparent;
@@ -252,7 +252,7 @@ select.input option { background:var(--card); color:var(--text); }
 .rec-action { font-family:'Syne',sans-serif; font-size:1.25rem; font-weight:700; letter-spacing:-0.02em; margin-bottom:10px; }
 .rec-message { font-size:0.875rem; color:var(--muted2); line-height:1.6; }
 
-/* ─── VIBE CHECK FORM ────────────────────────────────────── */
+/* â”€â”€â”€ VIBE CHECK FORM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .form-section { margin-bottom:24px; }
 .section-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:4px; }
 .section-sub { font-size:0.8rem; color:var(--muted2); margin-bottom:14px; }
@@ -261,29 +261,29 @@ select.input option { background:var(--card); color:var(--text); }
 .range-input::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--accent); cursor:pointer; border:2px solid var(--bg); }
 .range-val { font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--accent); text-align:right; }
 
-/* ─── RESULT SCREEN ──────────────────────────────────────── */
+/* â”€â”€â”€ RESULT SCREEN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .result-hero { padding:32px 20px; text-align:center; }
 .score-big { font-family:'Syne',sans-serif; font-size:5rem; font-weight:800; letter-spacing:-0.05em; line-height:1; }
 
-/* ─── HISTORY ────────────────────────────────────────────── */
+/* â”€â”€â”€ HISTORY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .history-item { display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:var(--surface); border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:var(--trans); }
 .history-item:hover { border-color:rgba(255,255,255,0.15); }
 .history-date { font-size:0.75rem; color:var(--muted); margin-top:2px; }
 
-/* ─── SETTINGS ───────────────────────────────────────────── */
+/* â”€â”€â”€ SETTINGS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .settings-row { display:flex; align-items:center; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--border); }
 .settings-label { font-size:0.9rem; }
 .settings-val { font-size:0.85rem; color:var(--muted2); font-family:'JetBrains Mono',monospace; }
 .logout-btn { background:rgba(255,87,87,0.1); border:1px solid rgba(255,87,87,0.2); color:#FF8080; }
 .logout-btn:hover { background:rgba(255,87,87,0.2); }
 
-/* ─── EMPTY STATE ────────────────────────────────────────── */
+/* â”€â”€â”€ EMPTY STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .empty { text-align:center; padding:48px 24px; }
 .empty-icon { font-size:3rem; margin-bottom:12px; }
 .empty-title { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:6px; }
 .empty-sub { font-size:0.85rem; color:var(--muted2); line-height:1.6; }
 
-/* ─── PAYSTACK MODAL ─────────────────────────────────────── */
+/* â”€â”€â”€ PAYSTACK MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; display:flex; align-items:flex-end; justify-content:center; animation:fadeIn 0.2s ease; }
 .modal-overlay.hidden { display:none !important; }
 .modal { background:var(--card); border:1px solid var(--border); border-radius:20px 20px 0 0; padding:24px; width:100%; max-width:500px; animation:slideUp 0.3s cubic-bezier(.4,0,.2,1); }
@@ -305,7 +305,7 @@ select.input option { background:var(--card); color:var(--text); }
 <div id="payModal" class="modal-overlay hidden">
   <div class="modal">
     <div class="flex items-center gap-2 mb-4">
-      <span style="font-size:1.5rem">⚡</span>
+      <span style="font-size:1.5rem">âš¡</span>
       <div>
         <div class="font-syne font-bold" style="font-size:1.1rem">Get Full Access</div>
         <div class="text-sm text-muted">One-time payment. No subscription.</div>
@@ -324,9 +324,9 @@ select.input option { background:var(--card); color:var(--text); }
 
 <div id="app">
 
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <!-- AUTH SCREEN                                           -->
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="screen-auth" class="screen active">
   <div class="auth-hero">
     <div class="logo-hero">Pul<span>se</span></div>
@@ -354,7 +354,7 @@ select.input option { background:var(--card); color:var(--text); }
         </div>
         <div class="input-group">
           <label class="input-label">Password</label>
-          <input class="input" type="password" id="login-pass" placeholder="••••••••" required>
+          <input class="input" type="password" id="login-pass" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required>
         </div>
         <button class="btn btn-primary btn-lg btn-full" type="submit" id="login-btn">Sign In</button>
       </form>
@@ -381,9 +381,9 @@ select.input option { background:var(--card); color:var(--text); }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <!-- DASHBOARD SCREEN                                      -->
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="screen-dashboard" class="screen">
   <nav class="nav">
     <div class="nav-logo">Pul<span>se</span></div>
@@ -396,10 +396,10 @@ select.input option { background:var(--card); color:var(--text); }
   <!-- No data state -->
   <div id="dash-empty" class="content hidden">
     <div class="empty">
-      <div class="empty-icon">📡</div>
+      <div class="empty-icon">ðŸ“¡</div>
       <div class="empty-title">No data yet</div>
       <div class="empty-sub mb-4">Run your first vibe check to see where you stand with the algorithm.</div>
-      <button class="btn btn-primary btn-lg" onclick="showScreen('check')">Run First Check →</button>
+      <button class="btn btn-primary btn-lg" onclick="showScreen('check')">Run First Check â†’</button>
     </div>
   </div>
 
@@ -431,7 +431,7 @@ select.input option { background:var(--card); color:var(--text); }
 
       <!-- CTA -->
       <button class="btn btn-primary btn-lg btn-full" onclick="showScreen('check')">
-        Run New Check ↗
+        Run New Check â†—
       </button>
 
       <div class="text-xs text-muted mt-3" style="text-align:center;" id="dash-check-time"></div>
@@ -440,30 +440,30 @@ select.input option { background:var(--card); color:var(--text); }
 
   <div class="bottom-nav">
     <div class="bnav-item active" onclick="showScreen('dashboard')">
-      <div class="bnav-icon">⚡</div>
+      <div class="bnav-icon">âš¡</div>
       <div class="bnav-label">Home</div>
     </div>
     <div class="bnav-item" onclick="showScreen('check')">
-      <div class="bnav-icon">🔍</div>
+      <div class="bnav-icon">ðŸ”</div>
       <div class="bnav-label">Vibe Check</div>
     </div>
     <div class="bnav-item" onclick="showScreen('history')">
-      <div class="bnav-icon">📋</div>
+      <div class="bnav-icon">ðŸ“‹</div>
       <div class="bnav-label">History</div>
     </div>
     <div class="bnav-item" onclick="showScreen('settings')">
-      <div class="bnav-icon">⚙️</div>
+      <div class="bnav-icon">âš™ï¸</div>
       <div class="bnav-label">Settings</div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <!-- VIBE CHECK SCREEN                                     -->
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="screen-check" class="screen">
   <nav class="nav">
-    <button class="btn btn-ghost" style="padding:8px 14px;" onclick="goBack()">← Back</button>
+    <button class="btn btn-ghost" style="padding:8px 14px;" onclick="goBack()">â† Back</button>
     <div class="nav-logo" style="font-size:1rem;">Vibe Check</div>
     <div style="width:80px;"></div>
   </nav>
@@ -481,11 +481,11 @@ select.input option { background:var(--card); color:var(--text); }
     <!-- STEP 1: Last videos -->
     <div id="check-step1">
       <div class="section-title mb-1">Your Last 5 Videos</div>
-      <div class="section-sub">Enter the stats from TikTok Studio. Be as accurate as you can — the brain learns from this.</div>
+      <div class="section-sub">Enter the stats from TikTok Studio. Be as accurate as you can â€” the brain learns from this.</div>
 
       <div id="video-rows" style="display:flex; flex-direction:column; gap:10px;"></div>
 
-      <button class="btn btn-primary btn-lg btn-full mt-4" onclick="goStep(2)">Next →</button>
+      <button class="btn btn-primary btn-lg btn-full mt-4" onclick="goStep(2)">Next â†’</button>
       <div class="text-xs text-muted mt-2" style="text-align:center;">Minimum 1 video. More = better predictions.</div>
     </div>
 
@@ -499,9 +499,9 @@ select.input option { background:var(--card); color:var(--text); }
           <label class="input-label">Video Length</label>
           <select class="input" id="post-length">
             <option value="15">Under 15 seconds</option>
-            <option value="30">15–30 seconds</option>
-            <option value="60" selected>30–60 seconds</option>
-            <option value="120">1–3 minutes</option>
+            <option value="30">15â€“30 seconds</option>
+            <option value="60" selected>30â€“60 seconds</option>
+            <option value="120">1â€“3 minutes</option>
             <option value="300">3+ minutes</option>
           </select>
         </div>
@@ -550,19 +550,19 @@ select.input option { background:var(--card); color:var(--text); }
         <div class="input-group">
           <label class="input-label">Planned Posting Time</label>
           <select class="input" id="post-hour">
-            <option value="7">Morning (6–9 AM)</option>
-            <option value="12">Midday (11 AM–1 PM)</option>
-            <option value="15">Afternoon (2–5 PM)</option>
-            <option value="19" selected>Evening (6–9 PM)</option>
-            <option value="21">Night (9 PM–12 AM)</option>
+            <option value="7">Morning (6â€“9 AM)</option>
+            <option value="12">Midday (11 AMâ€“1 PM)</option>
+            <option value="15">Afternoon (2â€“5 PM)</option>
+            <option value="19" selected>Evening (6â€“9 PM)</option>
+            <option value="21">Night (9 PMâ€“12 AM)</option>
           </select>
         </div>
       </div>
 
       <div class="flex gap-2 mt-4">
-        <button class="btn btn-ghost" onclick="goStep(1)">← Back</button>
+        <button class="btn btn-ghost" onclick="goStep(1)">â† Back</button>
         <button class="btn btn-primary btn-lg" style="flex:1;" onclick="runAnalysis()">
-          <span id="analyze-btn-text">Get My Reading ✨</span>
+          <span id="analyze-btn-text">Get My Reading âœ¨</span>
           <div class="spinner hidden" id="analyze-spinner"></div>
         </button>
       </div>
@@ -570,12 +570,12 @@ select.input option { background:var(--card); color:var(--text); }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <!-- RESULT SCREEN                                         -->
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="screen-result" class="screen">
   <nav class="nav">
-    <button class="btn btn-ghost" style="padding:8px 14px;" onclick="showScreen('dashboard')">← Home</button>
+    <button class="btn btn-ghost" style="padding:8px 14px;" onclick="showScreen('dashboard')">â† Home</button>
     <div class="nav-logo" style="font-size:1rem;">Your Reading</div>
     <div style="width:80px;"></div>
   </nav>
@@ -610,7 +610,7 @@ select.input option { background:var(--card); color:var(--text); }
     <!-- Optimal time -->
     <div class="card mb-4" id="result-timing">
       <div class="flex items-center gap-2 mb-1">
-        <span>🕐</span>
+        <span>ðŸ•</span>
         <div class="text-sm font-bold">Best Time to Post</div>
       </div>
       <div class="text-accent mono font-bold" id="result-optimal-time"></div>
@@ -621,7 +621,7 @@ select.input option { background:var(--card); color:var(--text); }
     <div class="card" id="result-feedback">
       <div class="text-sm font-bold mb-1">Come back in 48 hours</div>
       <div class="text-xs text-muted mb-3">Tell us how the post performed. The brain gets smarter every time.</div>
-      <button class="btn btn-ghost btn-full" onclick="showFeedbackForm()" id="feedback-btn">Submit Outcome →</button>
+      <button class="btn btn-ghost btn-full" onclick="showFeedbackForm()" id="feedback-btn">Submit Outcome â†’</button>
 
       <div id="feedback-form" class="hidden mt-3" style="display:flex; flex-direction:column; gap:10px;">
         <div class="grid-2">
@@ -640,9 +640,9 @@ select.input option { background:var(--card); color:var(--text); }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <!-- HISTORY SCREEN                                        -->
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="screen-history" class="screen">
   <nav class="nav">
     <div class="nav-logo">Pul<span>se</span></div>
@@ -657,16 +657,16 @@ select.input option { background:var(--card); color:var(--text); }
   </div>
 
   <div class="bottom-nav">
-    <div class="bnav-item" onclick="showScreen('dashboard')"><div class="bnav-icon">⚡</div><div class="bnav-label">Home</div></div>
-    <div class="bnav-item" onclick="showScreen('check')"><div class="bnav-icon">🔍</div><div class="bnav-label">Vibe Check</div></div>
-    <div class="bnav-item active" onclick="showScreen('history')"><div class="bnav-icon">📋</div><div class="bnav-label">History</div></div>
-    <div class="bnav-item" onclick="showScreen('settings')"><div class="bnav-icon">⚙️</div><div class="bnav-label">Settings</div></div>
+    <div class="bnav-item" onclick="showScreen('dashboard')"><div class="bnav-icon">âš¡</div><div class="bnav-label">Home</div></div>
+    <div class="bnav-item" onclick="showScreen('check')"><div class="bnav-icon">ðŸ”</div><div class="bnav-label">Vibe Check</div></div>
+    <div class="bnav-item active" onclick="showScreen('history')"><div class="bnav-icon">ðŸ“‹</div><div class="bnav-label">History</div></div>
+    <div class="bnav-item" onclick="showScreen('settings')"><div class="bnav-icon">âš™ï¸</div><div class="bnav-label">Settings</div></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <!-- SETTINGS SCREEN                                       -->
-<!-- ══════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="screen-settings" class="screen">
   <nav class="nav">
     <div class="nav-logo">Pul<span>se</span></div>
@@ -676,7 +676,7 @@ select.input option { background:var(--card); color:var(--text); }
   <div class="content">
     <div class="card mb-4">
       <div class="flex items-center gap-3 mb-4">
-        <div style="width:44px; height:44px; border-radius:50%; background:var(--accent-d); border:1px solid rgba(74,255,140,0.2); display:flex; align-items:center; justify-content:center; font-size:1.2rem;">👤</div>
+        <div style="width:44px; height:44px; border-radius:50%; background:var(--accent-d); border:1px solid rgba(74,255,140,0.2); display:flex; align-items:center; justify-content:center; font-size:1.2rem;">ðŸ‘¤</div>
         <div>
           <div class="font-bold" id="settings-name"></div>
           <div class="text-xs text-muted" id="settings-email"></div>
@@ -688,7 +688,7 @@ select.input option { background:var(--card); color:var(--text); }
       </div>
       <div class="settings-row">
         <span class="settings-label">Total Checks</span>
-        <span class="settings-val" id="settings-checks">—</span>
+        <span class="settings-val" id="settings-checks">â€”</span>
       </div>
     </div>
 
@@ -700,7 +700,7 @@ select.input option { background:var(--card); color:var(--text); }
       </div>
       <div class="settings-row" style="border-bottom:none;">
         <span class="settings-label">Brain Status</span>
-        <span class="text-accent text-xs">● Learning</span>
+        <span class="text-accent text-xs">â— Learning</span>
       </div>
     </div>
 
@@ -708,21 +708,21 @@ select.input option { background:var(--card); color:var(--text); }
   </div>
 
   <div class="bottom-nav">
-    <div class="bnav-item" onclick="showScreen('dashboard')"><div class="bnav-icon">⚡</div><div class="bnav-label">Home</div></div>
-    <div class="bnav-item" onclick="showScreen('check')"><div class="bnav-icon">🔍</div><div class="bnav-label">Vibe Check</div></div>
-    <div class="bnav-item" onclick="showScreen('history')"><div class="bnav-icon">📋</div><div class="bnav-label">History</div></div>
-    <div class="bnav-item active" onclick="showScreen('settings')"><div class="bnav-icon">⚙️</div><div class="bnav-label">Settings</div></div>
+    <div class="bnav-item" onclick="showScreen('dashboard')"><div class="bnav-icon">âš¡</div><div class="bnav-label">Home</div></div>
+    <div class="bnav-item" onclick="showScreen('check')"><div class="bnav-icon">ðŸ”</div><div class="bnav-label">Vibe Check</div></div>
+    <div class="bnav-item" onclick="showScreen('history')"><div class="bnav-icon">ðŸ“‹</div><div class="bnav-label">History</div></div>
+    <div class="bnav-item active" onclick="showScreen('settings')"><div class="bnav-icon">âš™ï¸</div><div class="bnav-label">Settings</div></div>
   </div>
 </div>
 
 </div><!-- /app -->
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────
-// GAS_URL is loaded at runtime from /api/config (Vercel env var)
-let GAS_URL = null;
+// â”€â”€ CONFIG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// All GAS calls are proxied through Vercel â€” no CORS issues
+const API = '/api/gas';
 
-// ── STATE ──────────────────────────────────────────────────
+// â”€â”€ STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 let state = {
   token:       null,
   user:        null,
@@ -733,17 +733,8 @@ let state = {
   videoCount:  5
 };
 
-// ── INIT ───────────────────────────────────────────────────
-async function initApp() {
-  // Fetch GAS URL from Vercel serverless function
-  try {
-    const res = await fetch('/api/config');
-    const cfg = await res.json();
-    GAS_URL = cfg.gasUrl;
-  } catch(e) {
-    console.error('Could not load app config:', e);
-  }
-
+// â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+window.onload = async () => {
   const token = localStorage.getItem('pulse_token');
   const user  = JSON.parse(localStorage.getItem('pulse_user') || 'null');
   if (token && user) {
@@ -754,21 +745,19 @@ async function initApp() {
   }
   buildVideoRows();
   await fetchConfig();
-}
+};
 
-window.onload = initApp;
-
-// ── API ────────────────────────────────────────────────────
+// â”€â”€ API â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function api(params) {
   try {
     const body = params.method === 'GET'
       ? { ...params.params }
       : params.body;
 
-    const res = await fetch(GAS_URL, {
+    const res = await fetch(API, {
       method: 'POST',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'text/plain' }
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
     });
     return await res.json();
   } catch(e) { return { error: 'Connection error. Check your internet.' }; }
@@ -779,7 +768,7 @@ async function fetchConfig() {
   if (!r.error) state.config = r;
 }
 
-// ── AUTH ───────────────────────────────────────────────────
+// â”€â”€ AUTH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function switchAuthTab(tab, el) {
   document.querySelectorAll('.auth-tabs .tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
@@ -790,7 +779,7 @@ function switchAuthTab(tab, el) {
 async function handleLogin(e) {
   e.preventDefault();
   const btn = document.getElementById('login-btn');
-  btn.disabled = true; btn.textContent = 'Signing in…';
+  btn.disabled = true; btn.textContent = 'Signing inâ€¦';
 
   const r = await api({ body: {
     action: 'login',
@@ -815,7 +804,7 @@ async function handleRegister(e) {
 
   if (cfg?.paystackActive) {
     // Show payment modal first
-    document.getElementById('payAmount').textContent = '₦' + (cfg.amount || 2000).toLocaleString();
+    document.getElementById('payAmount').textContent = 'â‚¦' + (cfg.amount || 2000).toLocaleString();
     document.getElementById('payModal').classList.remove('hidden');
     setupPaystack(async (ref) => {
       await completeRegister(ref);
@@ -827,7 +816,7 @@ async function handleRegister(e) {
 
 async function completeRegister(paystackRef) {
   const btn = document.getElementById('reg-btn');
-  btn.disabled = true; btn.textContent = 'Creating account…';
+  btn.disabled = true; btn.textContent = 'Creating accountâ€¦';
 
   const body = {
     action:   'register',
@@ -841,7 +830,7 @@ async function completeRegister(paystackRef) {
   btn.disabled = false; btn.textContent = 'Create Account';
 
   if (r.error === 'WAITLIST') {
-    showError('reg-error', '⏳ We\'re at capacity right now. You\'ve been added to the waitlist — we\'ll reach out soon!'); return;
+    showError('reg-error', 'â³ We\'re at capacity right now. You\'ve been added to the waitlist â€” we\'ll reach out soon!'); return;
   }
   if (r.error) { showError('reg-error', r.error); return; }
 
@@ -864,7 +853,7 @@ function logout() {
   showScreen('auth');
 }
 
-// ── DASHBOARD ──────────────────────────────────────────────
+// â”€â”€ DASHBOARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function loadDashboard() {
   const r = await api({ method:'GET', params:{ action:'dashboard', token: state.token } });
   if (r.error) { logout(); return; }
@@ -873,8 +862,8 @@ async function loadDashboard() {
   document.getElementById('dash-greeting').textContent = name.split(' ')[0];
 
   // Settings
-  document.getElementById('settings-name').textContent  = r.user?.name || '—';
-  document.getElementById('settings-email').textContent = state.user?.email || '—';
+  document.getElementById('settings-name').textContent  = r.user?.name || 'â€”';
+  document.getElementById('settings-email').textContent = state.user?.email || 'â€”';
   const planBadge = document.getElementById('settings-plan');
   const plan = r.user?.plan || 'free';
   planBadge.textContent = plan.toUpperCase();
@@ -898,12 +887,12 @@ async function loadDashboard() {
 
 function renderDashboardState(latest) {
   const { state: s, score, stateInfo, metrics, createdAt } = latest;
-  const stateEmojis = { HOT:'🔥', BUILDING:'⚡', COOLING:'😴', RESET:'🔍' };
+  const stateEmojis = { HOT:'ðŸ”¥', BUILDING:'âš¡', COOLING:'ðŸ˜´', RESET:'ðŸ”' };
 
-  document.getElementById('dash-emoji').textContent = stateEmojis[s] || '📊';
+  document.getElementById('dash-emoji').textContent = stateEmojis[s] || 'ðŸ“Š';
   document.getElementById('dash-state-label').className = `state-headline state-${s}`;
   document.getElementById('dash-state-label').textContent = stateInfo?.label || s;
-  document.getElementById('dash-state-sub').textContent = stateInfo?.message?.slice(0,100) + '…';
+  document.getElementById('dash-state-sub').textContent = stateInfo?.message?.slice(0,100) + 'â€¦';
   document.getElementById('dash-score').textContent = score;
   document.getElementById('dash-score').className = `score-big font-syne state-${s}`;
 
@@ -920,7 +909,7 @@ function renderDashboardState(latest) {
     { val: metrics.avgCompletion + '%', key:'Completion' },
     { val: trend + '%', key:'Trend' }
   ].forEach(c => {
-    chips.innerHTML += `<div class="chip"><div class="chip-val">${c.val||'—'}</div><div class="chip-key">${c.key}</div></div>`;
+    chips.innerHTML += `<div class="chip"><div class="chip-val">${c.val||'â€”'}</div><div class="chip-key">${c.key}</div></div>`;
   });
 
   // Recommendation
@@ -936,7 +925,7 @@ function renderDashboardState(latest) {
 
 function renderRec(el, stateInfo, s) {
   const urgencyColors = { high: 'var(--accent)', medium: 'var(--blue)', low: 'var(--amber)', none: 'var(--red)' };
-  const urgencyLabels = { high:'⚡ Act Now', medium:'👍 Good Time', low:'⚠️ Warm Up First', none:'🛑 Pause & Reset' };
+  const urgencyLabels = { high:'âš¡ Act Now', medium:'ðŸ‘ Good Time', low:'âš ï¸ Warm Up First', none:'ðŸ›‘ Pause & Reset' };
   el.className = `rec-card bg-${s}`;
   el.innerHTML = `
     <div class="rec-urgency" style="color:${urgencyColors[stateInfo.urgency]||'var(--muted2)'}">
@@ -947,7 +936,7 @@ function renderRec(el, stateInfo, s) {
   `;
 }
 
-// ── VIBE CHECK ─────────────────────────────────────────────
+// â”€â”€ VIBE CHECK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function buildVideoRows() {
   const container = document.getElementById('video-rows');
   container.innerHTML = '';
@@ -1049,9 +1038,9 @@ async function runAnalysis() {
   loadDashboard();
 }
 
-// ── RESULT ─────────────────────────────────────────────────
+// â”€â”€ RESULT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function renderResult(r) {
-  const stateEmojis = { HOT:'🔥', BUILDING:'⚡', COOLING:'😴', RESET:'🔍' };
+  const stateEmojis = { HOT:'ðŸ”¥', BUILDING:'âš¡', COOLING:'ðŸ˜´', RESET:'ðŸ”' };
   const stateColors = { HOT:'var(--accent)', BUILDING:'var(--blue)', COOLING:'var(--amber)', RESET:'var(--red)' };
   const s = r.state;
   const color = stateColors[s] || 'var(--text)';
@@ -1075,7 +1064,7 @@ function renderResult(r) {
     document.getElementById('result-post-tips').classList.remove('hidden');
     const list = document.getElementById('post-tips-list');
     list.innerHTML = r.postAdvice.tips.map(t =>
-      `<div class="insight-card"><div class="insight-icon">💡</div><div class="insight-text">${t}</div></div>`
+      `<div class="insight-card"><div class="insight-icon">ðŸ’¡</div><div class="insight-text">${t}</div></div>`
     ).join('');
   }
 
@@ -1113,7 +1102,7 @@ function renderResult(r) {
   }
 }
 
-// ── FEEDBACK ───────────────────────────────────────────────
+// â”€â”€ FEEDBACK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showFeedbackForm() {
   document.getElementById('feedback-form').classList.remove('hidden');
   document.getElementById('feedback-form').style.display = 'flex';
@@ -1135,14 +1124,14 @@ async function submitFeedback() {
   const r = await api({ body });
   if (r.error) { toast(r.error, 'error'); return; }
 
-  toast('Brain updated! Thanks for the data 🧠', 'success');
+  toast('Brain updated! Thanks for the data ðŸ§ ', 'success');
   document.getElementById('result-feedback').innerHTML = `
-    <div class="text-sm font-bold text-accent">✅ Outcome submitted</div>
+    <div class="text-sm font-bold text-accent">âœ… Outcome submitted</div>
     <div class="text-xs text-muted mt-1">The brain just got a little smarter. Keep running checks and submitting outcomes.</div>
   `;
 }
 
-// ── HISTORY ────────────────────────────────────────────────
+// â”€â”€ HISTORY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function loadHistory() {
   const container = document.getElementById('history-content');
   container.innerHTML = `<div class="empty"><div class="spinner" style="margin:0 auto 12px;"></div><div class="text-sm text-muted">Loading...</div></div>`;
@@ -1150,7 +1139,7 @@ async function loadHistory() {
   const r = await api({ method:'GET', params:{ action:'history', token:state.token } });
   if (r.error || !r.analyses?.length) {
     container.innerHTML = `<div class="empty">
-      <div class="empty-icon">📋</div>
+      <div class="empty-icon">ðŸ“‹</div>
       <div class="empty-title">No history yet</div>
       <div class="empty-sub">Your past vibe checks will appear here.</div>
     </div>`;
@@ -1158,7 +1147,7 @@ async function loadHistory() {
   }
 
   const stateColors = { HOT:'var(--accent)', BUILDING:'var(--blue)', COOLING:'var(--amber)', RESET:'var(--red)' };
-  const stateEmojis = { HOT:'🔥', BUILDING:'⚡', COOLING:'😴', RESET:'🔍' };
+  const stateEmojis = { HOT:'ðŸ”¥', BUILDING:'âš¡', COOLING:'ðŸ˜´', RESET:'ðŸ”' };
 
   container.innerHTML = `<div style="display:flex;flex-direction:column;gap:8px;">` +
     r.analyses.map(a => {
@@ -1167,17 +1156,17 @@ async function loadHistory() {
       return `<div class="history-item">
         <div>
           <div class="flex items-center gap-2">
-            <span style="color:${stateColors[a.state]||'var(--text)'}">${stateEmojis[a.state]||'📊'}</span>
+            <span style="color:${stateColors[a.state]||'var(--text)'}">${stateEmojis[a.state]||'ðŸ“Š'}</span>
             <span class="text-sm font-bold" style="color:${stateColors[a.state]||'var(--text)'}">${a.label||a.state}</span>
           </div>
-          <div class="history-date">${dateStr} · Score: ${a.score}</div>
+          <div class="history-date">${dateStr} Â· Score: ${a.score}</div>
         </div>
-        ${a.hasFeedback ? '<span class="text-xs text-accent">✓ Trained</span>' : '<span class="text-xs text-muted">Pending</span>'}
+        ${a.hasFeedback ? '<span class="text-xs text-accent">âœ“ Trained</span>' : '<span class="text-xs text-muted">Pending</span>'}
       </div>`;
     }).join('') + '</div>';
 }
 
-// ── PAYSTACK ───────────────────────────────────────────────
+// â”€â”€ PAYSTACK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function setupPaystack(callback, cfg) {
   if (!window.PaystackPop) {
     const s = document.createElement('script');
@@ -1207,7 +1196,7 @@ function initPaystack(callback, cfg) {
   };
 }
 
-// ── SCREEN ROUTER ──────────────────────────────────────────
+// â”€â”€ SCREEN ROUTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showScreen(name) {
   state.prevScreen = document.querySelector('.screen.active')?.id?.replace('screen-','') || 'dashboard';
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1224,7 +1213,7 @@ function goBack() {
   showScreen(state.prevScreen || 'dashboard');
 }
 
-// ── HELPERS ────────────────────────────────────────────────
+// â”€â”€ HELPERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showError(id, msg) {
   const el = document.getElementById(id);
   el.textContent = msg;
