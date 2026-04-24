@@ -3,349 +3,335 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Pulse â€” Know Your Algorithm</title>
+<title>Pulse — Call It Before The World Does</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Lexend:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* â”€â”€â”€ TOKENS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── TOKENS ─────────────────────────────────────────────── */
 :root {
-  --bg:        #060A14;
-  --surface:   #0C1120;
-  --card:      #0F1828;
+  --bg:        #050810;
+  --surface:   #0A0F1E;
+  --card:      #0D1425;
   --border:    rgba(255,255,255,0.07);
   --accent:    #4AFF8C;
   --accent-d:  rgba(74,255,140,0.12);
-  --accent-d2: rgba(74,255,140,0.06);
+  --accent-d2: rgba(74,255,140,0.05);
+  --red:       #FF4466;
+  --red-d:     rgba(255,68,102,0.12);
   --blue:      #57B8FF;
   --amber:     #FFB547;
-  --red:       #FF5757;
+  --purple:    #A855F7;
   --text:      #EEF2FF;
-  --muted:     #5A6580;
-  --muted2:    #8892AA;
+  --muted:     #4A5470;
+  --muted2:    #7A85A0;
   --radius:    14px;
   --radius-sm: 8px;
   --trans:     all 0.22s cubic-bezier(.4,0,.2,1);
 }
 
-/* â”€â”€â”€ RESET â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 html { height:100%; -webkit-tap-highlight-color:transparent; }
 body {
   height:100%; min-height:100dvh;
   font-family:'Lexend',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+  background:var(--bg); color:var(--text);
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
 }
 
-/* â”€â”€â”€ GRAIN OVERLAY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── GRAIN ────────────────────────────────────────────────── */
 body::before {
-  content:'';
-  position:fixed; inset:0; z-index:0; pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  background-size:200px 200px; opacity:0.4;
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size:200px 200px; opacity:0.5;
 }
 
-/* â”€â”€â”€ AMBIENT ORBS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.orb {
-  position:fixed; border-radius:50%; pointer-events:none; z-index:0;
-  filter:blur(80px); opacity:0.18; animation:drift 20s ease-in-out infinite alternate;
-}
-.orb1 { width:500px; height:500px; background:radial-gradient(circle,#4AFF8C,transparent); top:-100px; right:-100px; animation-delay:-5s; }
-.orb2 { width:400px; height:400px; background:radial-gradient(circle,#57B8FF,transparent); bottom:-80px; left:-80px; animation-delay:-12s; animation-duration:25s; }
-.orb3 { width:300px; height:300px; background:radial-gradient(circle,#4AFF8C,transparent); top:50%; left:50%; transform:translate(-50%,-50%); animation-duration:30s; opacity:0.08; }
-@keyframes drift { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(30px,20px) scale(1.1)} }
+/* ── ORBS ─────────────────────────────────────────────────── */
+.orb { position:fixed; border-radius:50%; pointer-events:none; z-index:0; filter:blur(90px); animation:drift 22s ease-in-out infinite alternate; }
+.orb1 { width:600px; height:600px; background:radial-gradient(circle,rgba(74,255,140,0.15),transparent); top:-150px; right:-150px; animation-delay:-5s; }
+.orb2 { width:500px; height:500px; background:radial-gradient(circle,rgba(87,184,255,0.1),transparent); bottom:-100px; left:-100px; animation-delay:-12s; animation-duration:28s; }
+.orb3 { width:350px; height:350px; background:radial-gradient(circle,rgba(168,85,247,0.08),transparent); top:40%; left:30%; animation-duration:35s; }
+@keyframes drift { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(25px,15px) scale(1.08)} }
 
-/* â”€â”€â”€ MAIN WRAPPER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── APP SHELL ───────────────────────────────────────────── */
 #app { position:relative; z-index:1; min-height:100dvh; display:flex; flex-direction:column; }
-.screen { display:none; flex-direction:column; min-height:100dvh; animation:fadeUp 0.35s ease; }
+.screen { display:none; flex-direction:column; min-height:100dvh; animation:fadeUp 0.3s ease; }
 .screen.active { display:flex; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
 
-/* â”€â”€â”€ NAV BAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── NAV ─────────────────────────────────────────────────── */
 .nav {
   display:flex; align-items:center; justify-content:space-between;
-  padding:16px 20px; border-bottom:1px solid var(--border);
-  background:rgba(6,10,20,0.8); backdrop-filter:blur(16px);
+  padding:14px 20px; border-bottom:1px solid var(--border);
+  background:rgba(5,8,16,0.85); backdrop-filter:blur(20px);
   position:sticky; top:0; z-index:100;
 }
-.nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.3rem; color:var(--text); letter-spacing:-0.03em; }
+.nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.25rem; letter-spacing:-0.04em; }
 .nav-logo span { color:var(--accent); }
-.nav-actions { display:flex; gap:8px; align-items:center; }
-.nav-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); animation:pulse-dot 2s ease-in-out infinite; }
-@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+.nav-pill {
+  display:flex; align-items:center; gap:6px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:20px; padding:5px 12px; font-size:0.75rem; color:var(--muted2);
+}
+.live-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); animation:pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.75)} }
 
-/* â”€â”€â”€ BUTTONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── BUTTONS ─────────────────────────────────────────────── */
 .btn {
-  font-family:'Lexend',sans-serif; font-size:0.9rem; font-weight:500;
+  font-family:'Lexend',sans-serif; font-size:0.88rem; font-weight:500;
   padding:10px 20px; border-radius:var(--radius-sm);
   border:none; cursor:pointer; transition:var(--trans);
-  display:inline-flex; align-items:center; gap:6px; white-space:nowrap;
+  display:inline-flex; align-items:center; gap:6px; white-space:nowrap; text-decoration:none;
 }
-.btn-primary {
-  background:var(--accent); color:#020B0A;
-}
-.btn-primary:hover { background:#5AFFAA; transform:translateY(-1px); box-shadow:0 8px 24px rgba(74,255,140,0.25); }
-.btn-primary:active { transform:none; }
-.btn-ghost {
-  background:transparent; color:var(--muted2); border:1px solid var(--border);
-}
+.btn-primary { background:var(--accent); color:#020B0A; }
+.btn-primary:hover { background:#5AFFAA; transform:translateY(-1px); box-shadow:0 8px 28px rgba(74,255,140,0.3); }
+.btn-danger { background:var(--red); color:#fff; }
+.btn-danger:hover { background:#FF6680; transform:translateY(-1px); box-shadow:0 8px 28px rgba(255,68,102,0.3); }
+.btn-ghost { background:transparent; color:var(--muted2); border:1px solid var(--border); }
 .btn-ghost:hover { border-color:rgba(255,255,255,0.18); color:var(--text); }
+.btn-surface { background:var(--surface); color:var(--text); border:1px solid var(--border); }
+.btn-surface:hover { border-color:rgba(255,255,255,0.15); }
 .btn-lg { padding:14px 28px; font-size:1rem; border-radius:12px; }
 .btn-full { width:100%; justify-content:center; }
-.btn:disabled { opacity:0.4; cursor:not-allowed; transform:none !important; }
+.btn:disabled { opacity:0.35; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
 
-/* â”€â”€â”€ INPUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── INPUTS ──────────────────────────────────────────────── */
 .input-group { display:flex; flex-direction:column; gap:6px; }
-.input-label { font-size:0.8rem; font-weight:500; color:var(--muted2); text-transform:uppercase; letter-spacing:0.06em; }
+.input-label { font-size:0.75rem; font-weight:600; color:var(--muted2); text-transform:uppercase; letter-spacing:0.07em; }
 .input {
   background:var(--surface); border:1px solid var(--border);
   color:var(--text); border-radius:var(--radius-sm); padding:12px 14px;
-  font-family:'Lexend',sans-serif; font-size:0.95rem; outline:none;
+  font-family:'Lexend',sans-serif; font-size:0.93rem; outline:none;
   transition:var(--trans); width:100%;
 }
 .input:focus { border-color:rgba(74,255,140,0.4); background:rgba(74,255,140,0.03); }
 .input::placeholder { color:var(--muted); }
 select.input option { background:var(--card); color:var(--text); }
+textarea.input { resize:vertical; min-height:80px; line-height:1.5; }
 
-/* â”€â”€â”€ CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.card {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:var(--radius); padding:20px;
+/* ── CARDS ───────────────────────────────────────────────── */
+.card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+
+/* ── BADGES ──────────────────────────────────────────────── */
+.badge { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:600; }
+.badge-green { background:rgba(74,255,140,0.12); color:var(--accent); border:1px solid rgba(74,255,140,0.2); }
+.badge-red   { background:rgba(255,68,102,0.12); color:var(--red); border:1px solid rgba(255,68,102,0.2); }
+.badge-blue  { background:rgba(87,184,255,0.12); color:var(--blue); border:1px solid rgba(87,184,255,0.2); }
+.badge-amber { background:rgba(255,181,71,0.12); color:var(--amber); border:1px solid rgba(255,181,71,0.2); }
+.badge-purple{ background:rgba(168,85,247,0.12); color:var(--purple); border:1px solid rgba(168,85,247,0.2); }
+.badge-muted { background:rgba(255,255,255,0.05); color:var(--muted2); border:1px solid var(--border); }
+
+/* ── BOTTOM NAV ──────────────────────────────────────────── */
+.bottom-nav {
+  position:fixed; bottom:0; left:0; right:0; z-index:100;
+  background:rgba(5,8,16,0.92); backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex; padding:10px 0 env(safe-area-inset-bottom,10px);
 }
+.bnav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding:4px; cursor:pointer; transition:var(--trans); }
+.bnav-icon { font-size:1.15rem; line-height:1; }
+.bnav-label { font-size:0.62rem; font-weight:500; color:var(--muted); transition:var(--trans); }
+.bnav-item.active .bnav-label { color:var(--accent); }
+.bnav-item.active .bnav-icon { filter:drop-shadow(0 0 8px var(--accent)); }
 
-/* â”€â”€â”€ BADGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.badge {
-  display:inline-flex; align-items:center; gap:5px;
-  padding:4px 10px; border-radius:20px;
-  font-size:0.75rem; font-weight:600;
-}
+/* ── CONTENT SCROLL ──────────────────────────────────────── */
+.content { flex:1; overflow-y:auto; padding:16px 16px 100px; max-width:560px; margin:0 auto; width:100%; }
 
-/* â”€â”€â”€ SCORE RING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.score-ring-wrap { position:relative; display:inline-flex; align-items:center; justify-content:center; }
-.score-ring-wrap svg { transform:rotate(-90deg); }
-.score-ring-center { position:absolute; text-align:center; }
-.score-num { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; line-height:1; }
-.score-label { font-size:0.65rem; color:var(--muted2); text-transform:uppercase; letter-spacing:0.06em; }
-
-/* â”€â”€â”€ TABS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.tabs { display:flex; gap:4px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:4px; }
-.tab { flex:1; text-align:center; padding:8px; border-radius:7px; font-size:0.85rem; font-weight:500; cursor:pointer; transition:var(--trans); color:var(--muted2); }
-.tab.active { background:var(--card); color:var(--text); border:1px solid var(--border); }
-
-/* â”€â”€â”€ STEP INDICATOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.steps { display:flex; align-items:center; gap:8px; }
-.step { width:28px; height:28px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:var(--muted); transition:var(--trans); flex-shrink:0; }
-.step.done { background:var(--accent); border-color:var(--accent); color:#020B0A; }
-.step.active { border-color:var(--accent); color:var(--accent); }
-.step-line { flex:1; height:1px; background:var(--border); }
-
-/* â”€â”€â”€ INSIGHT CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.insight-card { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; background:var(--surface); border:1px solid var(--border); border-radius:10px; }
-.insight-icon { font-size:1.2rem; flex-shrink:0; margin-top:1px; }
-.insight-title { font-size:0.85rem; font-weight:600; margin-bottom:3px; }
-.insight-text { font-size:0.8rem; color:var(--muted2); line-height:1.5; }
-
-/* â”€â”€â”€ VIDEO INPUT ROW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.video-row { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
-.video-row-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-.video-num { font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--accent); font-weight:500; }
-.video-inputs { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
-@media(max-width:480px) { .video-inputs { grid-template-columns:1fr 1fr; } }
-
-/* â”€â”€â”€ TOAST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── TOAST ────────────────────────────────────────────────── */
 #toast {
-  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+  position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(60px);
   background:var(--card); border:1px solid var(--border); color:var(--text);
-  padding:12px 20px; border-radius:10px; font-size:0.875rem;
-  transition:transform 0.3s cubic-bezier(.4,0,.2,1); z-index:9999;
-  white-space:nowrap; box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  padding:11px 20px; border-radius:10px; font-size:0.85rem;
+  transition:transform 0.28s cubic-bezier(.4,0,.2,1); z-index:9999;
+  white-space:nowrap; box-shadow:0 8px 32px rgba(0,0,0,0.5);
+  pointer-events:none;
 }
 #toast.show { transform:translateX(-50%) translateY(0); }
 #toast.success { border-color:rgba(74,255,140,0.3); }
-#toast.error { border-color:rgba(255,87,87,0.3); }
+#toast.error   { border-color:rgba(255,68,102,0.3); }
 
-/* â”€â”€â”€ LOADING SPINNER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.spinner { width:20px; height:20px; border:2px solid rgba(255,255,255,0.1); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; }
+/* ── SPINNER ─────────────────────────────────────────────── */
+.spinner { width:18px; height:18px; border:2px solid rgba(255,255,255,0.1); border-top-color:var(--accent); border-radius:50%; animation:spin 0.7s linear infinite; flex-shrink:0; }
 @keyframes spin { to{transform:rotate(360deg)} }
 
-/* â”€â”€â”€ BOTTOM NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.bottom-nav {
-  position:fixed; bottom:0; left:0; right:0; z-index:100;
-  background:rgba(6,10,20,0.9); backdrop-filter:blur(16px);
-  border-top:1px solid var(--border);
-  display:flex; padding:8px 0 env(safe-area-inset-bottom,8px);
-}
-.bnav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; padding:6px; cursor:pointer; transition:var(--trans); }
-.bnav-icon { font-size:1.2rem; }
-.bnav-label { font-size:0.65rem; font-weight:500; color:var(--muted); }
-.bnav-item.active .bnav-label { color:var(--accent); }
-.bnav-item.active .bnav-icon { filter:drop-shadow(0 0 6px var(--accent)); }
-
-/* â”€â”€â”€ SCROLLABLE CONTENT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.content { flex:1; overflow-y:auto; padding:20px 20px 100px; max-width:560px; margin:0 auto; width:100%; }
-
-/* â”€â”€â”€ STATE COLORS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.state-HOT    { color:var(--accent); }
-.state-BUILDING { color:var(--blue); }
-.state-COOLING  { color:var(--amber); }
-.state-RESET    { color:var(--red); }
-.bg-HOT     { background:rgba(74,255,140,0.1); border-color:rgba(74,255,140,0.2); }
-.bg-BUILDING{ background:rgba(87,184,255,0.1); border-color:rgba(87,184,255,0.2); }
-.bg-COOLING { background:rgba(255,181,71,0.1); border-color:rgba(255,181,71,0.2); }
-.bg-RESET   { background:rgba(255,87,87,0.1); border-color:rgba(255,87,87,0.2); }
-
-/* â”€â”€â”€ MISC â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.divider { height:1px; background:var(--border); margin:16px 0; }
+/* ── MISC UTILS ──────────────────────────────────────────── */
+.divider { height:1px; background:var(--border); margin:14px 0; }
 .mono { font-family:'JetBrains Mono',monospace; }
 .flex { display:flex; } .items-center { align-items:center; } .gap-2{gap:8px;} .gap-3{gap:12px;} .gap-4{gap:16px;}
-.justify-between { justify-content:space-between; }
-.flex-col { flex-direction:column; }
-.text-sm { font-size:0.85rem; } .text-xs { font-size:0.75rem; }
-.text-muted { color:var(--muted2); } .text-accent { color:var(--accent); }
-.font-bold { font-weight:700; } .font-syne { font-family:'Syne',sans-serif; }
-.mb-2{margin-bottom:8px;} .mb-3{margin-bottom:12px;} .mb-4{margin-bottom:16px;} .mb-6{margin-bottom:24px;}
+.justify-between{justify-content:space-between;} .flex-col{flex-direction:column;}
+.text-sm{font-size:0.85rem;} .text-xs{font-size:0.73rem;}
+.text-muted{color:var(--muted2);} .text-accent{color:var(--accent);} .text-red{color:var(--red);}
+.font-bold{font-weight:700;} .font-syne{font-family:'Syne',sans-serif;}
+.mb-1{margin-bottom:4px;} .mb-2{margin-bottom:8px;} .mb-3{margin-bottom:12px;} .mb-4{margin-bottom:16px;} .mb-6{margin-bottom:24px;}
 .mt-2{margin-top:8px;} .mt-3{margin-top:12px;} .mt-4{margin-top:16px;}
-.w-full{width:100%;}
-.hidden { display:none !important; }
-.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.w-full{width:100%;} .hidden{display:none !important;} .text-center{text-align:center;}
 
-/* â”€â”€â”€ AUTH SCREEN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-#screen-auth .auth-hero {
+/* ── AUTH SCREEN ─────────────────────────────────────────── */
+.auth-hero {
   flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:40px 24px 20px;
+  padding:40px 20px 24px;
 }
-.logo-hero { font-family:'Syne',sans-serif; font-weight:800; font-size:2.8rem; letter-spacing:-0.05em; margin-bottom:6px; }
+.logo-hero { font-family:'Syne',sans-serif; font-weight:800; font-size:3rem; letter-spacing:-0.06em; margin-bottom:4px; }
 .logo-hero span { color:var(--accent); }
-.tagline { color:var(--muted2); font-size:0.95rem; text-align:center; margin-bottom:32px; }
-.auth-box { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:24px; width:100%; max-width:400px; }
-.auth-tabs { margin-bottom:20px; }
-.auth-form { display:flex; flex-direction:column; gap:14px; }
-.form-error { background:rgba(255,87,87,0.1); border:1px solid rgba(255,87,87,0.25); color:#FF8080; padding:10px 14px; border-radius:8px; font-size:0.83rem; }
-.features-row { display:flex; flex-direction:column; gap:8px; margin-bottom:28px; max-width:400px; width:100%; }
-.feature-item { display:flex; align-items:center; gap:10px; font-size:0.85rem; color:var(--muted2); }
-.feature-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+.auth-tagline { color:var(--muted2); font-size:0.9rem; text-align:center; margin-bottom:10px; max-width:260px; line-height:1.6; }
+.auth-whisper { font-size:0.72rem; color:var(--muted); text-align:center; margin-bottom:28px; font-style:italic; }
+.auth-box { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:22px; width:100%; max-width:380px; }
+.tabs { display:flex; gap:4px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:3px; margin-bottom:18px; }
+.tab { flex:1; text-align:center; padding:7px; border-radius:7px; font-size:0.82rem; font-weight:500; cursor:pointer; transition:var(--trans); color:var(--muted2); }
+.tab.active { background:var(--card); color:var(--text); border:1px solid var(--border); }
+.auth-form { display:flex; flex-direction:column; gap:12px; }
+.form-error { background:rgba(255,68,102,0.08); border:1px solid rgba(255,68,102,0.25); color:#FF7A8F; padding:10px 14px; border-radius:8px; font-size:0.82rem; }
 
-/* â”€â”€â”€ DASHBOARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.state-hero {
-  padding:28px 20px; text-align:center;
-  background:linear-gradient(180deg,rgba(74,255,140,0.04),transparent);
-  border-bottom:1px solid var(--border); margin-bottom:0;
+/* ── ARENA SCREEN ────────────────────────────────────────── */
+.arena-header { padding:16px 16px 0; max-width:560px; margin:0 auto; width:100%; }
+.arena-title { font-family:'Syne',sans-serif; font-weight:800; font-size:1.3rem; letter-spacing:-0.03em; margin-bottom:2px; }
+.arena-sub { font-size:0.8rem; color:var(--muted2); }
+
+/* ── TREND CARD ──────────────────────────────────────────── */
+.trend-card {
+  background:var(--card); border:1px solid var(--border); border-radius:16px;
+  padding:18px; margin-bottom:10px; transition:var(--trans);
 }
-.state-emoji { font-size:2.5rem; margin-bottom:8px; }
-.state-headline { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; letter-spacing:-0.02em; margin-bottom:6px; }
-.state-sub { font-size:0.85rem; color:var(--muted2); max-width:280px; margin:0 auto; }
+.trend-card:hover { border-color:rgba(255,255,255,0.12); }
+.trend-card.voted-viral { border-color:rgba(74,255,140,0.25); background:rgba(74,255,140,0.03); }
+.trend-card.voted-flop  { border-color:rgba(255,68,102,0.25); background:rgba(255,68,102,0.03); }
+.trend-card.resolved-viral { border-color:rgba(74,255,140,0.35); }
+.trend-card.resolved-flop  { border-color:rgba(255,68,102,0.35); }
 
-/* â”€â”€â”€ METRIC CHIPS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.metric-chips { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; }
-.metric-chips::-webkit-scrollbar { display:none; }
-.chip { flex-shrink:0; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 14px; }
-.chip-val { font-family:'JetBrains Mono',monospace; font-size:1rem; font-weight:500; }
-.chip-key { font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-top:2px; }
+.trend-meta { display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+.trend-name { font-family:'Syne',sans-serif; font-weight:700; font-size:1.05rem; letter-spacing:-0.02em; margin-bottom:5px; line-height:1.3; }
+.trend-desc { font-size:0.82rem; color:var(--muted2); line-height:1.55; margin-bottom:12px; }
+.trend-scout { font-size:0.75rem; color:var(--muted); }
+.trend-scout span { color:var(--muted2); font-weight:500; }
 
-/* â”€â”€â”€ RECOMMENDATION CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.rec-card {
-  border-radius:16px; padding:20px; margin-bottom:16px;
-  border:1px solid transparent;
+/* Vote bar */
+.vote-bar-wrap { margin-bottom:12px; }
+.vote-bar-labels { display:flex; justify-content:space-between; font-size:0.72rem; color:var(--muted2); margin-bottom:4px; }
+.vote-bar { height:4px; background:rgba(255,255,255,0.06); border-radius:4px; overflow:hidden; }
+.vote-bar-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--blue)); border-radius:4px; transition:width 0.6s ease; }
+
+/* Vote buttons */
+.vote-btns { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.vote-btn {
+  padding:11px; border-radius:10px; border:1px solid; cursor:pointer;
+  font-family:'Lexend',sans-serif; font-size:0.82rem; font-weight:600;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  transition:var(--trans);
 }
-.rec-urgency { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:8px; }
-.rec-action { font-family:'Syne',sans-serif; font-size:1.25rem; font-weight:700; letter-spacing:-0.02em; margin-bottom:10px; }
-.rec-message { font-size:0.875rem; color:var(--muted2); line-height:1.6; }
+.vote-btn-viral { background:var(--accent-d2); border-color:rgba(74,255,140,0.2); color:var(--accent); }
+.vote-btn-viral:hover { background:var(--accent-d); border-color:rgba(74,255,140,0.4); transform:translateY(-1px); }
+.vote-btn-flop  { background:var(--red-d); border-color:rgba(255,68,102,0.2); color:var(--red); }
+.vote-btn-flop:hover  { background:rgba(255,68,102,0.18); border-color:rgba(255,68,102,0.4); transform:translateY(-1px); }
+.vote-btn.selected-viral { background:var(--accent-d); border-color:rgba(74,255,140,0.5); box-shadow:0 0 16px rgba(74,255,140,0.15); }
+.vote-btn.selected-flop  { background:rgba(255,68,102,0.18); border-color:rgba(255,68,102,0.5); box-shadow:0 0 16px rgba(255,68,102,0.15); }
+.vote-btn:disabled { opacity:0.5; cursor:default; transform:none !important; }
 
-/* â”€â”€â”€ VIBE CHECK FORM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.form-section { margin-bottom:24px; }
-.section-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:4px; }
-.section-sub { font-size:0.8rem; color:var(--muted2); margin-bottom:14px; }
-.range-wrap { display:flex; flex-direction:column; gap:6px; }
-.range-input { -webkit-appearance:none; width:100%; height:4px; border-radius:4px; background:var(--surface); outline:none; }
-.range-input::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--accent); cursor:pointer; border:2px solid var(--bg); }
-.range-val { font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--accent); text-align:right; }
+/* Timer */
+.trend-timer { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); }
+.trend-timer.urgent { color:var(--amber); }
 
-/* â”€â”€â”€ RESULT SCREEN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.result-hero { padding:32px 20px; text-align:center; }
-.score-big { font-family:'Syne',sans-serif; font-size:5rem; font-weight:800; letter-spacing:-0.05em; line-height:1; }
+/* Result overlay */
+.result-tag { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:6px; font-size:0.78rem; font-weight:700; }
+.result-tag-viral { background:rgba(74,255,140,0.15); color:var(--accent); }
+.result-tag-flop  { background:rgba(255,68,102,0.15); color:var(--red); }
+.points-earned { font-family:'JetBrains Mono',monospace; font-size:0.8rem; font-weight:500; }
+.points-earned.pos { color:var(--accent); }
+.points-earned.neg { color:var(--red); }
 
-/* â”€â”€â”€ HISTORY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.history-item { display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:var(--surface); border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:var(--trans); }
-.history-item:hover { border-color:rgba(255,255,255,0.15); }
-.history-date { font-size:0.75rem; color:var(--muted); margin-top:2px; }
+/* ── SCOUT SCREEN ────────────────────────────────────────── */
+.scout-intro { background:linear-gradient(135deg,rgba(74,255,140,0.06),rgba(87,184,255,0.04)); border:1px solid rgba(74,255,140,0.12); border-radius:14px; padding:16px; margin-bottom:20px; }
+.scout-intro-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:4px; }
+.scout-intro-sub { font-size:0.8rem; color:var(--muted2); line-height:1.5; }
 
-/* â”€â”€â”€ SETTINGS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.settings-row { display:flex; align-items:center; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--border); }
-.settings-label { font-size:0.9rem; }
-.settings-val { font-size:0.85rem; color:var(--muted2); font-family:'JetBrains Mono',monospace; }
-.logout-btn { background:rgba(255,87,87,0.1); border:1px solid rgba(255,87,87,0.2); color:#FF8080; }
-.logout-btn:hover { background:rgba(255,87,87,0.2); }
+/* ── RANK SCREEN ─────────────────────────────────────────── */
+.rank-hero {
+  background:linear-gradient(160deg,rgba(74,255,140,0.06),rgba(87,184,255,0.04),transparent);
+  border-bottom:1px solid var(--border); padding:28px 20px 24px; text-align:center;
+}
+.rank-score-num { font-family:'Syne',sans-serif; font-weight:800; font-size:4.5rem; letter-spacing:-0.05em; line-height:1; color:var(--accent); }
+.rank-label { font-size:0.75rem; color:var(--muted2); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px; }
+.rank-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1.2rem; margin-top:8px; }
+.rank-title-sub { font-size:0.8rem; color:var(--muted2); margin-top:2px; }
 
-/* â”€â”€â”€ EMPTY STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.empty { text-align:center; padding:48px 24px; }
-.empty-icon { font-size:3rem; margin-bottom:12px; }
-.empty-title { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:6px; }
-.empty-sub { font-size:0.85rem; color:var(--muted2); line-height:1.6; }
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:16px; }
+.stat-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
+.stat-val { font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:500; color:var(--text); }
+.stat-key { font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-top:2px; }
 
-/* â”€â”€â”€ PAYSTACK MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; display:flex; align-items:flex-end; justify-content:center; animation:fadeIn 0.2s ease; }
-.modal-overlay.hidden { display:none !important; }
-.modal { background:var(--card); border:1px solid var(--border); border-radius:20px 20px 0 0; padding:24px; width:100%; max-width:500px; animation:slideUp 0.3s cubic-bezier(.4,0,.2,1); }
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-@keyframes slideUp { from{transform:translateY(100%)} to{transform:none} }
+/* Title progress */
+.title-track { display:flex; flex-direction:column; gap:6px; }
+.title-step { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; border:1px solid var(--border); }
+.title-step.unlocked { border-color:rgba(74,255,140,0.2); background:rgba(74,255,140,0.04); }
+.title-step.current  { border-color:rgba(74,255,140,0.4); background:rgba(74,255,140,0.08); }
+.title-step-name { font-size:0.85rem; font-weight:600; }
+.title-step-pts  { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted2); }
+
+/* ── LEADERBOARD ─────────────────────────────────────────── */
+.lb-row { display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--surface); border:1px solid var(--border); border-radius:10px; margin-bottom:6px; }
+.lb-rank { font-family:'Syne',sans-serif; font-weight:800; font-size:1rem; color:var(--muted); min-width:24px; text-align:center; }
+.lb-rank.top { color:var(--amber); }
+.lb-name { flex:1; font-size:0.88rem; font-weight:500; }
+.lb-title-small { font-size:0.7rem; color:var(--muted2); }
+.lb-score { font-family:'JetBrains Mono',monospace; font-size:0.88rem; color:var(--accent); }
+.lb-row.is-me { border-color:rgba(74,255,140,0.25); background:rgba(74,255,140,0.04); }
+
+/* ── MY RESULTS ──────────────────────────────────────────── */
+.result-item { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; padding:13px 14px; background:var(--surface); border:1px solid var(--border); border-radius:10px; margin-bottom:6px; }
+.result-item.correct   { border-color:rgba(74,255,140,0.2); }
+.result-item.incorrect { border-color:rgba(255,68,102,0.15); }
+.result-item.pending   { opacity:0.7; }
+
+/* ── EMPTY STATE ─────────────────────────────────────────── */
+.empty { text-align:center; padding:48px 20px; }
+.empty-icon { font-size:2.8rem; margin-bottom:12px; }
+.empty-title { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; margin-bottom:6px; }
+.empty-sub { font-size:0.82rem; color:var(--muted2); line-height:1.6; }
+
+/* ── SECTION HEADERS ─────────────────────────────────────── */
+.section-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.section-title { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; }
+
+/* ── SHARE CARD ──────────────────────────────────────────── */
+.share-card {
+  background:linear-gradient(135deg,#0D1425,#0A1A10);
+  border:1px solid rgba(74,255,140,0.25); border-radius:16px; padding:22px;
+  text-align:center; position:relative; overflow:hidden; margin-bottom:16px;
+}
+.share-card::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 0%,rgba(74,255,140,0.08),transparent 60%); pointer-events:none; }
+.share-card-score { font-family:'Syne',sans-serif; font-weight:800; font-size:3.5rem; color:var(--accent); letter-spacing:-0.04em; line-height:1; }
+.share-card-title { font-size:1rem; font-weight:600; margin:4px 0 2px; }
+.share-card-sub   { font-size:0.75rem; color:var(--muted2); }
+.share-card-brand { font-family:'Syne',sans-serif; font-size:0.7rem; color:var(--muted); margin-top:12px; letter-spacing:0.1em; text-transform:uppercase; }
+
+/* ── FILTER TABS ─────────────────────────────────────────── */
+.filter-tabs { display:flex; gap:6px; overflow-x:auto; padding-bottom:2px; scrollbar-width:none; margin-bottom:14px; }
+.filter-tabs::-webkit-scrollbar { display:none; }
+.filter-tab { flex-shrink:0; padding:6px 14px; border-radius:20px; font-size:0.78rem; font-weight:500; border:1px solid var(--border); background:var(--surface); color:var(--muted2); cursor:pointer; transition:var(--trans); }
+.filter-tab.active { background:var(--accent-d); border-color:rgba(74,255,140,0.3); color:var(--accent); }
 </style>
 </head>
 <body>
 
-<!-- Ambient background -->
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
-
-<!-- Toast -->
 <div id="toast"></div>
-
-<!-- Paystack Modal -->
-<div id="payModal" class="modal-overlay hidden">
-  <div class="modal">
-    <div class="flex items-center gap-2 mb-4">
-      <span style="font-size:1.5rem">âš¡</span>
-      <div>
-        <div class="font-syne font-bold" style="font-size:1.1rem">Get Full Access</div>
-        <div class="text-sm text-muted">One-time payment. No subscription.</div>
-      </div>
-    </div>
-    <div class="card mb-4" style="border-color:rgba(74,255,140,0.2); background:rgba(74,255,140,0.05);">
-      <div class="flex justify-between items-center">
-        <span class="text-sm">Pulse Access</span>
-        <span class="font-bold text-accent mono" id="payAmount"></span>
-      </div>
-    </div>
-    <button class="btn btn-primary btn-lg btn-full" id="payBtn">Pay Now</button>
-    <button class="btn btn-ghost btn-full mt-2" onclick="document.getElementById('payModal').classList.add('hidden')">Cancel</button>
-  </div>
-</div>
 
 <div id="app">
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<!-- AUTH SCREEN                                           -->
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- AUTH                                                  -->
+<!-- ══════════════════════════════════════════════════════ -->
 <div id="screen-auth" class="screen active">
   <div class="auth-hero">
     <div class="logo-hero">Pul<span>se</span></div>
-    <div class="tagline">Know exactly where you stand with the algorithm.<br>Before you post.</div>
-    
-    <div class="features-row">
-      <div class="feature-item"><div class="feature-dot"></div> Real-time account health check</div>
-      <div class="feature-item"><div class="feature-dot"></div> Know if your account is hot or cooling</div>
-      <div class="feature-item"><div class="feature-dot"></div> Tells you what to post next and when</div>
-      <div class="feature-item"><div class="feature-dot"></div> Gets smarter every time you use it</div>
-    </div>
+    <div class="auth-tagline">Some people see what's coming.<br>You're about to be one of them.</div>
+    <div class="auth-whisper">⚡ The prediction arena for TikTok trends</div>
 
     <div class="auth-box">
-      <div class="tabs auth-tabs">
+      <div class="tabs">
         <div class="tab active" onclick="switchAuthTab('login',this)">Sign In</div>
-        <div class="tab" onclick="switchAuthTab('register',this)">Create Account</div>
+        <div class="tab" onclick="switchAuthTab('register',this)">Join</div>
       </div>
 
-      <!-- LOGIN FORM -->
       <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
         <div id="login-error" class="form-error hidden"></div>
         <div class="input-group">
@@ -354,17 +340,16 @@ select.input option { background:var(--card); color:var(--text); }
         </div>
         <div class="input-group">
           <label class="input-label">Password</label>
-          <input class="input" type="password" id="login-pass" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required>
+          <input class="input" type="password" id="login-pass" placeholder="••••••••" required>
         </div>
-        <button class="btn btn-primary btn-lg btn-full" type="submit" id="login-btn">Sign In</button>
+        <button class="btn btn-primary btn-lg btn-full" type="submit" id="login-btn">Enter the Arena →</button>
       </form>
 
-      <!-- REGISTER FORM -->
       <form id="register-form" class="auth-form hidden" onsubmit="handleRegister(event)">
         <div id="reg-error" class="form-error hidden"></div>
         <div class="input-group">
-          <label class="input-label">Your Name</label>
-          <input class="input" type="text" id="reg-name" placeholder="Creator name" required>
+          <label class="input-label">Name</label>
+          <input class="input" type="text" id="reg-name" placeholder="How you'll appear on the leaderboard" required>
         </div>
         <div class="input-group">
           <label class="input-label">Email</label>
@@ -374,386 +359,252 @@ select.input option { background:var(--card); color:var(--text); }
           <label class="input-label">Password</label>
           <input class="input" type="password" id="reg-pass" placeholder="Min 8 characters" required minlength="8">
         </div>
-        <button class="btn btn-primary btn-lg btn-full" type="submit" id="reg-btn">Create Account</button>
-        <div class="text-xs text-muted" style="text-align:center;">By signing up you agree to our Terms of Service.</div>
+        <button class="btn btn-primary btn-lg btn-full" type="submit" id="reg-btn">Claim Your Spot</button>
+        <div class="text-xs text-muted text-center">By joining you agree to our Terms.</div>
       </form>
     </div>
   </div>
 </div>
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<!-- DASHBOARD SCREEN                                      -->
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<div id="screen-dashboard" class="screen">
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- ARENA                                                 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="screen-arena" class="screen">
   <nav class="nav">
     <div class="nav-logo">Pul<span>se</span></div>
-    <div class="nav-actions">
-      <div class="nav-dot"></div>
-      <span class="text-xs text-muted" id="dash-greeting"></span>
-    </div>
+    <div class="nav-pill"><div class="live-dot"></div><span id="arena-count">— live</span></div>
   </nav>
 
-  <!-- No data state -->
-  <div id="dash-empty" class="content hidden">
-    <div class="empty">
-      <div class="empty-icon">ðŸ“¡</div>
-      <div class="empty-title">No data yet</div>
-      <div class="empty-sub mb-4">Run your first vibe check to see where you stand with the algorithm.</div>
-      <button class="btn btn-primary btn-lg" onclick="showScreen('check')">Run First Check â†’</button>
+  <div class="arena-header mt-3 mb-3">
+    <div class="arena-title">The Arena</div>
+    <div class="arena-sub">Call which trends go viral. Build your score.</div>
+  </div>
+
+  <div class="content" style="padding-top:4px;">
+    <!-- Filter tabs -->
+    <div class="filter-tabs">
+      <div class="filter-tab active" onclick="filterArena('all',this)">All</div>
+      <div class="filter-tab" onclick="filterArena('Sound',this)">🎵 Sound</div>
+      <div class="filter-tab" onclick="filterArena('Hashtag',this)">🏷️ Hashtag</div>
+      <div class="filter-tab" onclick="filterArena('Format',this)">🎬 Format</div>
+      <div class="filter-tab" onclick="filterArena('Product',this)">🛍️ Product</div>
+    </div>
+
+    <div id="arena-list">
+      <div class="empty"><div class="spinner" style="margin:0 auto 12px;"></div><div class="text-sm text-muted">Loading signals…</div></div>
     </div>
   </div>
 
-  <!-- Has data state -->
-  <div id="dash-data" class="hidden" style="flex:1; flex-direction:column;">
-    <!-- State hero -->
-    <div class="state-hero" id="dash-state-hero">
-      <div class="state-emoji" id="dash-emoji"></div>
-      <div class="state-headline" id="dash-state-label"></div>
-      <div class="state-sub" id="dash-state-sub"></div>
+  <div class="bottom-nav">
+    <div class="bnav-item active" onclick="showScreen('arena')"><div class="bnav-icon">⚡</div><div class="bnav-label">Arena</div></div>
+    <div class="bnav-item" onclick="showScreen('scout')"><div class="bnav-icon">🔭</div><div class="bnav-label">Scout</div></div>
+    <div class="bnav-item" onclick="showScreen('results')"><div class="bnav-icon">📋</div><div class="bnav-label">My Calls</div></div>
+    <div class="bnav-item" onclick="showScreen('rank')"><div class="bnav-icon">🏆</div><div class="bnav-label">My Rank</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SCOUT                                                 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="screen-scout" class="screen">
+  <nav class="nav">
+    <div class="nav-logo">Pul<span>se</span></div>
+    <div class="text-xs text-muted">Scout a Trend</div>
+  </nav>
+
+  <div class="content">
+    <div class="scout-intro mb-4">
+      <div class="scout-intro-title">🔭 You spotted something?</div>
+      <div class="scout-intro-sub">Submit a trend you think is about to blow up. If you're right and others call it too — you earn Scout points on top of prediction points. The best Scouts become legends.</div>
     </div>
 
-    <div class="content">
-      <!-- Score + Metrics -->
-      <div class="flex items-center gap-4 mb-4" style="justify-content:space-between;">
-        <div>
-          <div class="text-xs text-muted mb-1 mono" style="text-transform:uppercase; letter-spacing:0.06em;">Algorithm Score</div>
-          <div class="score-big font-syne" id="dash-score"></div>
-          <div class="text-xs text-muted">out of 100</div>
-        </div>
-        <div id="dash-ring"></div>
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div class="input-group">
+        <label class="input-label">Trend Name</label>
+        <input class="input" type="text" id="scout-name" placeholder='e.g. "villain era" sound, #softlife challenge…' maxlength="80" required>
+        <div class="text-xs text-muted mt-1">Keep it short and recognizable</div>
       </div>
 
-      <!-- Metric chips -->
-      <div class="metric-chips mb-4" id="dash-chips"></div>
+      <div class="input-group">
+        <label class="input-label">Type</label>
+        <select class="input" id="scout-type">
+          <option value="Sound">🎵 Sound / Audio</option>
+          <option value="Hashtag">🏷️ Hashtag / Challenge</option>
+          <option value="Format">🎬 Video Format / Style</option>
+          <option value="Product">🛍️ Product / Item</option>
+        </select>
+      </div>
 
-      <!-- Recommendation -->
-      <div id="dash-rec" class="rec-card mb-4"></div>
+      <div class="input-group">
+        <label class="input-label">Why do you think it's going viral?</label>
+        <textarea class="input" id="scout-desc" placeholder="What did you notice? Where did you first see it? What makes it spread?" maxlength="300" required></textarea>
+        <div class="text-xs text-muted mt-1">Be specific. Vague submissions get fewer predictions.</div>
+      </div>
 
-      <!-- CTA -->
-      <button class="btn btn-primary btn-lg btn-full" onclick="showScreen('check')">
-        Run New Check â†—
+      <div class="input-group">
+        <label class="input-label">TikTok Link (optional)</label>
+        <input class="input" type="url" id="scout-url" placeholder="https://www.tiktok.com/…">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Closes in</label>
+        <select class="input" id="scout-days">
+          <option value="3">3 days</option>
+          <option value="5">5 days</option>
+          <option value="7" selected>7 days</option>
+          <option value="14">14 days</option>
+        </select>
+        <div class="text-xs text-muted mt-1">How long should others have to place their predictions?</div>
+      </div>
+
+      <button class="btn btn-primary btn-lg btn-full" onclick="submitScout()" id="scout-btn">
+        <span id="scout-btn-text">Submit Signal 🔭</span>
+        <div class="spinner hidden" id="scout-spinner"></div>
       </button>
-
-      <div class="text-xs text-muted mt-3" style="text-align:center;" id="dash-check-time"></div>
     </div>
   </div>
 
   <div class="bottom-nav">
-    <div class="bnav-item active" onclick="showScreen('dashboard')">
-      <div class="bnav-icon">âš¡</div>
-      <div class="bnav-label">Home</div>
-    </div>
-    <div class="bnav-item" onclick="showScreen('check')">
-      <div class="bnav-icon">ðŸ”</div>
-      <div class="bnav-label">Vibe Check</div>
-    </div>
-    <div class="bnav-item" onclick="showScreen('history')">
-      <div class="bnav-icon">ðŸ“‹</div>
-      <div class="bnav-label">History</div>
-    </div>
-    <div class="bnav-item" onclick="showScreen('settings')">
-      <div class="bnav-icon">âš™ï¸</div>
-      <div class="bnav-label">Settings</div>
-    </div>
+    <div class="bnav-item" onclick="showScreen('arena')"><div class="bnav-icon">⚡</div><div class="bnav-label">Arena</div></div>
+    <div class="bnav-item active" onclick="showScreen('scout')"><div class="bnav-icon">🔭</div><div class="bnav-label">Scout</div></div>
+    <div class="bnav-item" onclick="showScreen('results')"><div class="bnav-icon">📋</div><div class="bnav-label">My Calls</div></div>
+    <div class="bnav-item" onclick="showScreen('rank')"><div class="bnav-icon">🏆</div><div class="bnav-label">My Rank</div></div>
   </div>
 </div>
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<!-- VIBE CHECK SCREEN                                     -->
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<div id="screen-check" class="screen">
-  <nav class="nav">
-    <button class="btn btn-ghost" style="padding:8px 14px;" onclick="goBack()">â† Back</button>
-    <div class="nav-logo" style="font-size:1rem;">Vibe Check</div>
-    <div style="width:80px;"></div>
-  </nav>
-
-  <div class="content">
-    <!-- Step indicator -->
-    <div class="flex items-center gap-2 mb-6">
-      <div class="step active" id="step1-dot">1</div>
-      <div class="step-line"></div>
-      <div class="step" id="step2-dot">2</div>
-      <div class="step-line"></div>
-      <div class="step" id="step3-dot">3</div>
-    </div>
-
-    <!-- STEP 1: Last videos -->
-    <div id="check-step1">
-      <div class="section-title mb-1">Your Last 5 Videos</div>
-      <div class="section-sub">Enter the stats from TikTok Studio. Be as accurate as you can â€” the brain learns from this.</div>
-
-      <div id="video-rows" style="display:flex; flex-direction:column; gap:10px;"></div>
-
-      <button class="btn btn-primary btn-lg btn-full mt-4" onclick="goStep(2)">Next â†’</button>
-      <div class="text-xs text-muted mt-2" style="text-align:center;">Minimum 1 video. More = better predictions.</div>
-    </div>
-
-    <!-- STEP 2: About your next post -->
-    <div id="check-step2" class="hidden">
-      <div class="section-title mb-1">Your Next Post</div>
-      <div class="section-sub">Tell us about the content you're about to post. We'll give you specific tips.</div>
-
-      <div style="display:flex; flex-direction:column; gap:14px;">
-        <div class="input-group">
-          <label class="input-label">Video Length</label>
-          <select class="input" id="post-length">
-            <option value="15">Under 15 seconds</option>
-            <option value="30">15â€“30 seconds</option>
-            <option value="60" selected>30â€“60 seconds</option>
-            <option value="120">1â€“3 minutes</option>
-            <option value="300">3+ minutes</option>
-          </select>
-        </div>
-
-        <div class="input-group">
-          <label class="input-label">Sound Type</label>
-          <select class="input" id="post-sound">
-            <option value="trending">Trending sound</option>
-            <option value="original">My own sound / voiceover</option>
-            <option value="none">No sound</option>
-          </select>
-        </div>
-
-        <div class="input-group">
-          <label class="input-label">First 2 Seconds</label>
-          <select class="input" id="post-hook">
-            <option value="1">Has a strong text/visual hook</option>
-            <option value="0">Starts without a hook</option>
-          </select>
-        </div>
-
-        <div class="input-group">
-          <label class="input-label">Number of Hashtags</label>
-          <div class="range-wrap">
-            <input type="range" class="range-input" id="post-hashtags" min="0" max="15" value="4" oninput="document.getElementById('hash-val').textContent=this.value">
-            <div class="flex justify-between">
-              <span class="text-xs text-muted">0</span>
-              <span class="range-val" id="hash-val">4</span>
-              <span class="text-xs text-muted">15</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="input-group">
-          <label class="input-label">Caption Length (approx words)</label>
-          <div class="range-wrap">
-            <input type="range" class="range-input" id="post-caption" min="0" max="100" value="20" oninput="document.getElementById('cap-val').textContent=this.value">
-            <div class="flex justify-between">
-              <span class="text-xs text-muted">0</span>
-              <span class="range-val" id="cap-val">20</span>
-              <span class="text-xs text-muted">100</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="input-group">
-          <label class="input-label">Planned Posting Time</label>
-          <select class="input" id="post-hour">
-            <option value="7">Morning (6â€“9 AM)</option>
-            <option value="12">Midday (11 AMâ€“1 PM)</option>
-            <option value="15">Afternoon (2â€“5 PM)</option>
-            <option value="19" selected>Evening (6â€“9 PM)</option>
-            <option value="21">Night (9 PMâ€“12 AM)</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="flex gap-2 mt-4">
-        <button class="btn btn-ghost" onclick="goStep(1)">â† Back</button>
-        <button class="btn btn-primary btn-lg" style="flex:1;" onclick="runAnalysis()">
-          <span id="analyze-btn-text">Get My Reading âœ¨</span>
-          <div class="spinner hidden" id="analyze-spinner"></div>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<!-- RESULT SCREEN                                         -->
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<div id="screen-result" class="screen">
-  <nav class="nav">
-    <button class="btn btn-ghost" style="padding:8px 14px;" onclick="showScreen('dashboard')">â† Home</button>
-    <div class="nav-logo" style="font-size:1rem;">Your Reading</div>
-    <div style="width:80px;"></div>
-  </nav>
-
-  <div class="content">
-    <!-- Score hero -->
-    <div class="result-hero text-center mb-4">
-      <div class="text-xs text-muted mono mb-2" style="text-transform:uppercase; letter-spacing:0.1em;">Algorithm Score</div>
-      <div class="score-big font-syne mb-2" id="result-score"></div>
-      <div class="badge mb-3" id="result-state-badge"></div>
-      <div class="text-sm text-muted" id="result-state-label"></div>
-    </div>
-
-    <!-- Main recommendation -->
-    <div id="result-rec" class="rec-card mb-4"></div>
-
-    <!-- Post tips -->
-    <div id="result-post-tips" class="card mb-4 hidden">
-      <div class="text-sm font-bold mb-3">Tips for your next post</div>
-      <div id="post-tips-list" style="display:flex; flex-direction:column; gap:8px;"></div>
-    </div>
-
-    <!-- Metrics -->
-    <div class="card mb-4">
-      <div class="text-sm font-bold mb-3">Your Numbers</div>
-      <div id="result-metrics" style="display:flex; flex-direction:column; gap:10px;"></div>
-    </div>
-
-    <!-- Insights -->
-    <div id="result-insights" style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;"></div>
-
-    <!-- Optimal time -->
-    <div class="card mb-4" id="result-timing">
-      <div class="flex items-center gap-2 mb-1">
-        <span>ðŸ•</span>
-        <div class="text-sm font-bold">Best Time to Post</div>
-      </div>
-      <div class="text-accent mono font-bold" id="result-optimal-time"></div>
-      <div class="text-xs text-muted mt-1" id="result-timing-reason"></div>
-    </div>
-
-    <!-- Outcome feedback -->
-    <div class="card" id="result-feedback">
-      <div class="text-sm font-bold mb-1">Come back in 48 hours</div>
-      <div class="text-xs text-muted mb-3">Tell us how the post performed. The brain gets smarter every time.</div>
-      <button class="btn btn-ghost btn-full" onclick="showFeedbackForm()" id="feedback-btn">Submit Outcome â†’</button>
-
-      <div id="feedback-form" class="hidden mt-3" style="display:flex; flex-direction:column; gap:10px;">
-        <div class="grid-2">
-          <div class="input-group"><label class="input-label">Views</label><input class="input" type="number" id="fb-views" placeholder="0"></div>
-          <div class="input-group"><label class="input-label">Likes</label><input class="input" type="number" id="fb-likes" placeholder="0"></div>
-          <div class="input-group"><label class="input-label">Comments</label><input class="input" type="number" id="fb-comments" placeholder="0"></div>
-          <div class="input-group"><label class="input-label">Shares</label><input class="input" type="number" id="fb-shares" placeholder="0"></div>
-        </div>
-        <div class="input-group">
-          <label class="input-label">Completion Rate (%)</label>
-          <input class="input" type="number" id="fb-completion" placeholder="e.g. 45" min="0" max="100">
-        </div>
-        <button class="btn btn-primary btn-full" onclick="submitFeedback()">Submit & Train Brain</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<!-- HISTORY SCREEN                                        -->
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<div id="screen-history" class="screen">
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MY RESULTS                                            -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="screen-results" class="screen">
   <nav class="nav">
     <div class="nav-logo">Pul<span>se</span></div>
-    <div class="text-xs text-muted">Past Checks</div>
-  </nav>
-
-  <div class="content" id="history-content">
-    <div class="empty">
-      <div class="spinner" style="margin:0 auto 12px;"></div>
-      <div class="text-sm text-muted">Loading history...</div>
-    </div>
-  </div>
-
-  <div class="bottom-nav">
-    <div class="bnav-item" onclick="showScreen('dashboard')"><div class="bnav-icon">âš¡</div><div class="bnav-label">Home</div></div>
-    <div class="bnav-item" onclick="showScreen('check')"><div class="bnav-icon">ðŸ”</div><div class="bnav-label">Vibe Check</div></div>
-    <div class="bnav-item active" onclick="showScreen('history')"><div class="bnav-icon">ðŸ“‹</div><div class="bnav-label">History</div></div>
-    <div class="bnav-item" onclick="showScreen('settings')"><div class="bnav-icon">âš™ï¸</div><div class="bnav-label">Settings</div></div>
-  </div>
-</div>
-
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<!-- SETTINGS SCREEN                                       -->
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<div id="screen-settings" class="screen">
-  <nav class="nav">
-    <div class="nav-logo">Pul<span>se</span></div>
-    <div class="text-xs text-muted">Settings</div>
+    <div class="text-xs text-muted">My Calls</div>
   </nav>
 
   <div class="content">
-    <div class="card mb-4">
-      <div class="flex items-center gap-3 mb-4">
-        <div style="width:44px; height:44px; border-radius:50%; background:var(--accent-d); border:1px solid rgba(74,255,140,0.2); display:flex; align-items:center; justify-content:center; font-size:1.2rem;">ðŸ‘¤</div>
-        <div>
-          <div class="font-bold" id="settings-name"></div>
-          <div class="text-xs text-muted" id="settings-email"></div>
-        </div>
-      </div>
-      <div class="settings-row">
-        <span class="settings-label">Plan</span>
-        <span class="badge" id="settings-plan"></span>
-      </div>
-      <div class="settings-row">
-        <span class="settings-label">Total Checks</span>
-        <span class="settings-val" id="settings-checks">â€”</span>
-      </div>
+    <div id="results-list">
+      <div class="empty"><div class="spinner" style="margin:0 auto 12px;"></div><div class="text-sm text-muted">Loading…</div></div>
     </div>
-
-    <div class="card mb-4">
-      <div class="text-sm font-bold mb-3">App Info</div>
-      <div class="settings-row">
-        <span class="settings-label">Version</span>
-        <span class="settings-val mono">1.0.0</span>
-      </div>
-      <div class="settings-row" style="border-bottom:none;">
-        <span class="settings-label">Brain Status</span>
-        <span class="text-accent text-xs">â— Learning</span>
-      </div>
-    </div>
-
-    <button class="btn logout-btn btn-full" onclick="logout()">Sign Out</button>
   </div>
 
   <div class="bottom-nav">
-    <div class="bnav-item" onclick="showScreen('dashboard')"><div class="bnav-icon">âš¡</div><div class="bnav-label">Home</div></div>
-    <div class="bnav-item" onclick="showScreen('check')"><div class="bnav-icon">ðŸ”</div><div class="bnav-label">Vibe Check</div></div>
-    <div class="bnav-item" onclick="showScreen('history')"><div class="bnav-icon">ðŸ“‹</div><div class="bnav-label">History</div></div>
-    <div class="bnav-item active" onclick="showScreen('settings')"><div class="bnav-icon">âš™ï¸</div><div class="bnav-label">Settings</div></div>
+    <div class="bnav-item" onclick="showScreen('arena')"><div class="bnav-icon">⚡</div><div class="bnav-label">Arena</div></div>
+    <div class="bnav-item" onclick="showScreen('scout')"><div class="bnav-icon">🔭</div><div class="bnav-label">Scout</div></div>
+    <div class="bnav-item active" onclick="showScreen('results')"><div class="bnav-icon">📋</div><div class="bnav-label">My Calls</div></div>
+    <div class="bnav-item" onclick="showScreen('rank')"><div class="bnav-icon">🏆</div><div class="bnav-label">My Rank</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MY RANK                                               -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="screen-rank" class="screen">
+  <nav class="nav">
+    <div class="nav-logo">Pul<span>se</span></div>
+    <div class="text-xs text-muted" id="rank-greeting"></div>
+  </nav>
+
+  <div class="rank-hero">
+    <div class="rank-label">Signal Score</div>
+    <div class="rank-score-num" id="rank-score">—</div>
+    <div class="rank-title" id="rank-title">—</div>
+    <div class="rank-title-sub" id="rank-title-sub"></div>
+  </div>
+
+  <div class="content">
+    <!-- Share card -->
+    <div class="share-card" id="rank-share-card">
+      <div class="share-card-score" id="share-score">—</div>
+      <div class="share-card-title" id="share-title">—</div>
+      <div class="share-card-sub" id="share-accuracy">—</div>
+      <div class="share-card-brand">PULSE · ALGORITHM PROPHET ARENA</div>
+    </div>
+    <button class="btn btn-surface btn-full mb-4" onclick="shareCard()">📤 Share My Card</button>
+
+    <!-- Stats -->
+    <div class="stat-grid mb-4">
+      <div class="stat-box"><div class="stat-val" id="rank-predictions">—</div><div class="stat-key">Predictions</div></div>
+      <div class="stat-box"><div class="stat-val" id="rank-accuracy">—</div><div class="stat-key">Accuracy</div></div>
+      <div class="stat-box"><div class="stat-val" id="rank-scouts">—</div><div class="stat-key">Trends Scouted</div></div>
+      <div class="stat-box"><div class="stat-val" id="rank-streak">—</div><div class="stat-key">Streak</div></div>
+    </div>
+
+    <!-- Title progression -->
+    <div class="section-head"><div class="section-title">Title Progression</div></div>
+    <div class="title-track mb-4" id="title-track"></div>
+
+    <!-- Leaderboard preview -->
+    <div class="section-head">
+      <div class="section-title">Leaderboard</div>
+      <div class="text-xs text-muted">Top Prophets</div>
+    </div>
+    <div id="leaderboard-list">
+      <div class="empty" style="padding:24px;"><div class="spinner" style="margin:0 auto 10px;"></div><div class="text-xs text-muted">Loading…</div></div>
+    </div>
+
+    <div class="divider mt-4"></div>
+    <button class="btn btn-ghost btn-full mt-3" onclick="logout()" style="color:var(--red); border-color:rgba(255,68,102,0.2);">Sign Out</button>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="bnav-item" onclick="showScreen('arena')"><div class="bnav-icon">⚡</div><div class="bnav-label">Arena</div></div>
+    <div class="bnav-item" onclick="showScreen('scout')"><div class="bnav-icon">🔭</div><div class="bnav-label">Scout</div></div>
+    <div class="bnav-item" onclick="showScreen('results')"><div class="bnav-icon">📋</div><div class="bnav-label">My Calls</div></div>
+    <div class="bnav-item active" onclick="showScreen('rank')"><div class="bnav-icon">🏆</div><div class="bnav-label">My Rank</div></div>
   </div>
 </div>
 
 </div><!-- /app -->
 
 <script>
-// â”€â”€ CONFIG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// All GAS calls are proxied through Vercel â€” no CORS issues
+// ── CONFIG ────────────────────────────────────────────────
 const API = '/api/gas';
 
-// â”€â”€ STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── STATE ─────────────────────────────────────────────────
 let state = {
-  token:       null,
-  user:        null,
-  config:      null,
-  lastResult:  null,
-  lastAnalId:  null,
-  prevScreen:  'dashboard',
-  videoCount:  5
+  token:      null,
+  user:       null,
+  trends:     [],
+  myVotes:    {}, // trendId → 'viral'|'flop'
+  activeFilter: 'all'
 };
 
-// â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── TITLES ────────────────────────────────────────────────
+const TITLES = [
+  { pts:0,    name:'Lurker',              sub:'Just watching for now.' },
+  { pts:50,   name:'Pattern Spotter',     sub:'You\'re starting to see it.' },
+  { pts:200,  name:'Trend Reader',        sub:'The feed doesn\'t fool you.' },
+  { pts:500,  name:'Signal Hunter',       sub:'You catch things early.' },
+  { pts:1000, name:'Algorithm Whisperer', sub:'The algorithm has no secrets from you.' },
+  { pts:2000, name:'Algorithm Prophet',   sub:'You called it before the world did.' },
+];
+
+function getTitle(score) {
+  let t = TITLES[0];
+  for (const tier of TITLES) { if (score >= tier.pts) t = tier; }
+  return t;
+}
+
+function getNextTitle(score) {
+  for (const tier of TITLES) { if (score < tier.pts) return tier; }
+  return null;
+}
+
+// ── INIT ──────────────────────────────────────────────────
 window.onload = async () => {
   const token = localStorage.getItem('pulse_token');
   const user  = JSON.parse(localStorage.getItem('pulse_user') || 'null');
   if (token && user) {
     state.token = token;
     state.user  = user;
-    await loadDashboard();
-    showScreen('dashboard');
+    showScreen('arena');
+    loadArena();
   }
-  buildVideoRows();
-  await fetchConfig();
 };
 
-// â”€â”€ API â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-async function api(params) {
+// ── API ───────────────────────────────────────────────────
+async function api(body) {
   try {
-    const body = params.method === 'GET'
-      ? { ...params.params }
-      : params.body;
-
     const res = await fetch(API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -763,14 +614,9 @@ async function api(params) {
   } catch(e) { return { error: 'Connection error. Check your internet.' }; }
 }
 
-async function fetchConfig() {
-  const r = await api({ method:'GET', params:{ action:'config' } });
-  if (!r.error) state.config = r;
-}
-
-// â”€â”€ AUTH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── AUTH ──────────────────────────────────────────────────
 function switchAuthTab(tab, el) {
-  document.querySelectorAll('.auth-tabs .tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('login-form').classList.toggle('hidden', tab !== 'login');
   document.getElementById('register-form').classList.toggle('hidden', tab !== 'register');
@@ -779,64 +625,26 @@ function switchAuthTab(tab, el) {
 async function handleLogin(e) {
   e.preventDefault();
   const btn = document.getElementById('login-btn');
-  btn.disabled = true; btn.textContent = 'Signing inâ€¦';
-
-  const r = await api({ body: {
-    action: 'login',
-    email:  document.getElementById('login-email').value,
-    password: document.getElementById('login-pass').value
-  }});
-
-  btn.disabled = false; btn.textContent = 'Sign In';
-
-  if (r.error) {
-    showError('login-error', r.error || 'Login failed'); return;
-  }
-
+  btn.disabled = true; btn.textContent = 'Entering…';
+  const r = await api({ action:'login', email: document.getElementById('login-email').value, password: document.getElementById('login-pass').value });
+  btn.disabled = false; btn.textContent = 'Enter the Arena →';
+  if (r.error) { showError('login-error', r.error); return; }
   saveAuth(r);
-  await loadDashboard();
-  showScreen('dashboard');
+  showScreen('arena');
+  loadArena();
 }
 
 async function handleRegister(e) {
   e.preventDefault();
-  const cfg = state.config;
-
-  if (cfg?.paystackActive) {
-    // Show payment modal first
-    document.getElementById('payAmount').textContent = 'â‚¦' + (cfg.amount || 2000).toLocaleString();
-    document.getElementById('payModal').classList.remove('hidden');
-    setupPaystack(async (ref) => {
-      await completeRegister(ref);
-    }, cfg);
-    return;
-  }
-  await completeRegister(null);
-}
-
-async function completeRegister(paystackRef) {
   const btn = document.getElementById('reg-btn');
-  btn.disabled = true; btn.textContent = 'Creating accountâ€¦';
-
-  const body = {
-    action:   'register',
-    name:     document.getElementById('reg-name').value,
-    email:    document.getElementById('reg-email').value,
-    password: document.getElementById('reg-pass').value,
-  };
-  if (paystackRef) body.paystack_ref = paystackRef;
-
-  const r = await api({ body });
-  btn.disabled = false; btn.textContent = 'Create Account';
-
-  if (r.error === 'WAITLIST') {
-    showError('reg-error', 'â³ We\'re at capacity right now. You\'ve been added to the waitlist â€” we\'ll reach out soon!'); return;
-  }
+  btn.disabled = true; btn.textContent = 'Claiming spot…';
+  const r = await api({ action:'register', name: document.getElementById('reg-name').value, email: document.getElementById('reg-email').value, password: document.getElementById('reg-pass').value });
+  btn.disabled = false; btn.textContent = 'Claim Your Spot';
+  if (r.error === 'WAITLIST') { showError('reg-error', '⏳ We\'re at capacity. You\'ve been added to the waitlist — we\'ll reach out soon!'); return; }
   if (r.error) { showError('reg-error', r.error); return; }
-
   saveAuth(r);
-  await loadDashboard();
-  showScreen('dashboard');
+  showScreen('arena');
+  loadArena();
 }
 
 function saveAuth(r) {
@@ -849,381 +657,312 @@ function saveAuth(r) {
 function logout() {
   localStorage.removeItem('pulse_token');
   localStorage.removeItem('pulse_user');
-  state = { token:null, user:null, config:null, lastResult:null, lastAnalId:null, prevScreen:'dashboard', videoCount:5 };
+  state = { token:null, user:null, trends:[], myVotes:{}, activeFilter:'all' };
   showScreen('auth');
 }
 
-// â”€â”€ DASHBOARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-async function loadDashboard() {
-  const r = await api({ method:'GET', params:{ action:'dashboard', token: state.token } });
-  if (r.error) { logout(); return; }
+// ── ARENA ─────────────────────────────────────────────────
+async function loadArena() {
+  const r = await api({ action:'get_arena', token: state.token });
+  if (r.error) { if (r.error.includes('expired')) { logout(); return; } toast(r.error,'error'); return; }
+  state.trends  = r.trends || [];
+  state.myVotes = r.myVotes || {};
+  renderArena();
+  document.getElementById('arena-count').textContent = state.trends.filter(t=>t.status==='active').length + ' live';
+}
 
-  const name = r.user?.name || 'Creator';
-  document.getElementById('dash-greeting').textContent = name.split(' ')[0];
+function filterArena(type, el) {
+  state.activeFilter = type;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderArena();
+}
 
-  // Settings
-  document.getElementById('settings-name').textContent  = r.user?.name || 'â€”';
-  document.getElementById('settings-email').textContent = state.user?.email || 'â€”';
-  const planBadge = document.getElementById('settings-plan');
-  const plan = r.user?.plan || 'free';
-  planBadge.textContent = plan.toUpperCase();
-  planBadge.style.background = plan === 'pro' ? 'rgba(74,255,140,0.15)' : 'rgba(255,255,255,0.05)';
-  planBadge.style.color = plan === 'pro' ? 'var(--accent)' : 'var(--muted2)';
-  planBadge.style.border = plan === 'pro' ? '1px solid rgba(74,255,140,0.25)' : '1px solid var(--border)';
-  document.getElementById('settings-checks').textContent = r.totalChecks || 0;
+function renderArena() {
+  const list = document.getElementById('arena-list');
+  const filtered = state.activeFilter === 'all'
+    ? state.trends
+    : state.trends.filter(t => t.type === state.activeFilter);
 
-  if (!r.hasData) {
-    document.getElementById('dash-empty').classList.remove('hidden');
-    document.getElementById('dash-data').classList.add('hidden');
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">📡</div><div class="empty-title">No signals here yet</div><div class="empty-sub">Be the first to scout a trend in this category.</div></div>`;
     return;
   }
 
-  document.getElementById('dash-empty').classList.add('hidden');
-  document.getElementById('dash-data').classList.remove('hidden');
-  document.getElementById('dash-data').style.display = 'flex';
-
-  renderDashboardState(r.latest);
+  list.innerHTML = filtered.map(t => buildTrendCard(t)).join('');
 }
 
-function renderDashboardState(latest) {
-  const { state: s, score, stateInfo, metrics, createdAt } = latest;
-  const stateEmojis = { HOT:'ðŸ”¥', BUILDING:'âš¡', COOLING:'ðŸ˜´', RESET:'ðŸ”' };
+function buildTrendCard(t) {
+  const myVote   = state.myVotes[t.id];
+  const isActive = t.status === 'active';
+  const resolved = t.status === 'resolved';
+  const total    = (t.viralVotes || 0) + (t.flopVotes || 0);
+  const viralPct = total > 0 ? Math.round((t.viralVotes / total) * 100) : 50;
 
-  document.getElementById('dash-emoji').textContent = stateEmojis[s] || 'ðŸ“Š';
-  document.getElementById('dash-state-label').className = `state-headline state-${s}`;
-  document.getElementById('dash-state-label').textContent = stateInfo?.label || s;
-  document.getElementById('dash-state-sub').textContent = stateInfo?.message?.slice(0,100) + 'â€¦';
-  document.getElementById('dash-score').textContent = score;
-  document.getElementById('dash-score').className = `score-big font-syne state-${s}`;
+  const typeEmoji = { Sound:'🎵', Hashtag:'🏷️', Format:'🎬', Product:'🛍️' }[t.type] || '📡';
 
-  const heroEl = document.getElementById('dash-state-hero');
-  heroEl.className = 'state-hero';
+  const cardClass = myVote === 'viral' ? 'trend-card voted-viral'
+                  : myVote === 'flop'  ? 'trend-card voted-flop'
+                  : resolved && t.result === 'viral' ? 'trend-card resolved-viral'
+                  : resolved && t.result === 'flop'  ? 'trend-card resolved-flop'
+                  : 'trend-card';
 
-  // Chips
-  const chips = document.getElementById('dash-chips');
-  chips.innerHTML = '';
-  const trend = metrics.viewTrend > 0 ? '+' + metrics.viewTrend : metrics.viewTrend;
-  [
-    { val: metrics.avgViews?.toLocaleString(), key:'Avg Views' },
-    { val: metrics.avgEngagement + '%', key:'Engagement' },
-    { val: metrics.avgCompletion + '%', key:'Completion' },
-    { val: trend + '%', key:'Trend' }
-  ].forEach(c => {
-    chips.innerHTML += `<div class="chip"><div class="chip-val">${c.val||'â€”'}</div><div class="chip-key">${c.key}</div></div>`;
-  });
+  const timerStr = isActive ? getTimerStr(t.closesAt) : '';
+  const timerClass = isActive && getDaysLeft(t.closesAt) <= 1 ? 'trend-timer urgent' : 'trend-timer';
 
-  // Recommendation
-  if (stateInfo) renderRec(document.getElementById('dash-rec'), stateInfo, s);
+  let bottomSection = '';
 
-  // Timestamp
-  const t = document.getElementById('dash-check-time');
-  if (createdAt) {
-    const d = new Date(createdAt);
-    t.textContent = 'Last check: ' + d.toLocaleDateString('en-NG', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
-  }
-}
-
-function renderRec(el, stateInfo, s) {
-  const urgencyColors = { high: 'var(--accent)', medium: 'var(--blue)', low: 'var(--amber)', none: 'var(--red)' };
-  const urgencyLabels = { high:'âš¡ Act Now', medium:'ðŸ‘ Good Time', low:'âš ï¸ Warm Up First', none:'ðŸ›‘ Pause & Reset' };
-  el.className = `rec-card bg-${s}`;
-  el.innerHTML = `
-    <div class="rec-urgency" style="color:${urgencyColors[stateInfo.urgency]||'var(--muted2)'}">
-      ${urgencyLabels[stateInfo.urgency]||''}
-    </div>
-    <div class="rec-action">${stateInfo.action||''}</div>
-    <div class="rec-message">${stateInfo.message||''}</div>
-  `;
-}
-
-// â”€â”€ VIBE CHECK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-function buildVideoRows() {
-  const container = document.getElementById('video-rows');
-  container.innerHTML = '';
-  for (let i = 1; i <= state.videoCount; i++) {
-    container.innerHTML += `
-      <div class="video-row">
-        <div class="video-row-header">
-          <span class="video-num">VIDEO ${i}</span>
-          ${i === state.videoCount && i > 1
-            ? `<button class="btn btn-ghost" style="padding:4px 10px; font-size:0.75rem;" onclick="removeVideo()">Remove</button>`
-            : i < 5 ? `<button class="btn btn-ghost" style="padding:4px 10px; font-size:0.75rem;" onclick="addVideo()">+ Add</button>` : ''}
+  if (resolved) {
+    const correct = myVote === t.result;
+    const pts     = t.myPoints || 0;
+    bottomSection = `
+      <div class="flex items-center justify-between">
+        <div class="result-tag ${t.result === 'viral' ? 'result-tag-viral' : 'result-tag-flop'}">
+          ${t.result === 'viral' ? '🔥 Went Viral' : '💀 Flopped'}
         </div>
-        <div class="video-inputs">
-          <div class="input-group">
-            <label class="input-label">Views</label>
-            <input class="input video-views" type="number" placeholder="e.g. 5000" min="0">
-          </div>
-          <div class="input-group">
-            <label class="input-label">Likes</label>
-            <input class="input video-likes" type="number" placeholder="e.g. 200" min="0">
-          </div>
-          <div class="input-group">
-            <label class="input-label">Comments</label>
-            <input class="input video-comments" type="number" placeholder="e.g. 30" min="0">
-          </div>
-          <div class="input-group">
-            <label class="input-label">Shares</label>
-            <input class="input video-shares" type="number" placeholder="e.g. 15" min="0">
-          </div>
-          <div class="input-group" style="grid-column:span 2;">
-            <label class="input-label">Watch Time % (Completion)</label>
-            <input class="input video-completion" type="number" placeholder="e.g. 45" min="0" max="100">
-          </div>
-        </div>
+        ${myVote ? `<div class="points-earned ${pts > 0 ? 'pos' : 'neg'}">${pts > 0 ? '+' : ''}${pts} pts ${correct ? '✓' : '✗'}</div>` : '<span class="text-xs text-muted">You didn\'t call this one</span>'}
       </div>`;
-  }
-}
-
-function addVideo() {
-  if (state.videoCount < 5) { state.videoCount++; buildVideoRows(); }
-}
-function removeVideo() {
-  if (state.videoCount > 1) { state.videoCount--; buildVideoRows(); }
-}
-
-function goStep(step) {
-  document.getElementById('check-step1').classList.toggle('hidden', step !== 1);
-  document.getElementById('check-step2').classList.toggle('hidden', step !== 2);
-
-  for (let i = 1; i <= 3; i++) {
-    const d = document.getElementById(`step${i}-dot`);
-    d.classList.toggle('done', i < step);
-    d.classList.toggle('active', i === step);
-  }
-}
-
-function collectVideos() {
-  const rows = document.querySelectorAll('.video-row');
-  const videos = [];
-  rows.forEach(row => {
-    const v = parseInt(row.querySelector('.video-views').value) || 0;
-    const l = parseInt(row.querySelector('.video-likes').value) || 0;
-    const c = parseInt(row.querySelector('.video-comments').value) || 0;
-    const s = parseInt(row.querySelector('.video-shares').value) || 0;
-    const cp = parseFloat(row.querySelector('.video-completion').value) || 0;
-    if (v > 0) videos.push({ views:v, likes:l, comments:c, shares:s, completion:cp });
-  });
-  return videos;
-}
-
-async function runAnalysis() {
-  const videos = collectVideos();
-  if (videos.length === 0) { toast('Add at least 1 video with views', 'error'); return; }
-
-  const btn     = document.getElementById('analyze-btn-text');
-  const spinner = document.getElementById('analyze-spinner');
-  btn.classList.add('hidden'); spinner.classList.remove('hidden');
-
-  const newPost = {
-    length:      parseInt(document.getElementById('post-length').value),
-    soundType:   document.getElementById('post-sound').value,
-    hasHook:     document.getElementById('post-hook').value === '1',
-    hashtagCount:parseInt(document.getElementById('post-hashtags').value),
-    captionLength:parseInt(document.getElementById('post-caption').value),
-    plannedHour: parseInt(document.getElementById('post-hour').value)
-  };
-
-  const r = await api({ body: { action:'analyze', token:state.token, videos, newPost } });
-  btn.classList.remove('hidden'); spinner.classList.add('hidden');
-
-  if (r.error) { toast(r.error, 'error'); return; }
-
-  state.lastResult = r;
-  state.lastAnalId = r.analysisId;
-  renderResult(r);
-  showScreen('result');
-
-  // Update dashboard in background
-  loadDashboard();
-}
-
-// â”€â”€ RESULT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-function renderResult(r) {
-  const stateEmojis = { HOT:'ðŸ”¥', BUILDING:'âš¡', COOLING:'ðŸ˜´', RESET:'ðŸ”' };
-  const stateColors = { HOT:'var(--accent)', BUILDING:'var(--blue)', COOLING:'var(--amber)', RESET:'var(--red)' };
-  const s = r.state;
-  const color = stateColors[s] || 'var(--text)';
-
-  document.getElementById('result-score').textContent = r.score;
-  document.getElementById('result-score').style.color = color;
-
-  const badge = document.getElementById('result-state-badge');
-  badge.textContent = stateEmojis[s] + ' ' + s;
-  badge.style.background = color + '18';
-  badge.style.color = color;
-  badge.style.border = '1px solid ' + color + '35';
-
-  document.getElementById('result-state-label').textContent = r.stateInfo?.label || '';
-
-  // Rec
-  if (r.stateInfo) renderRec(document.getElementById('result-rec'), r.stateInfo, s);
-
-  // Post tips
-  if (r.postAdvice?.tips?.length) {
-    document.getElementById('result-post-tips').classList.remove('hidden');
-    const list = document.getElementById('post-tips-list');
-    list.innerHTML = r.postAdvice.tips.map(t =>
-      `<div class="insight-card"><div class="insight-icon">ðŸ’¡</div><div class="insight-text">${t}</div></div>`
-    ).join('');
+  } else if (isActive) {
+    if (myVote) {
+      bottomSection = `
+        <div class="flex items-center justify-between">
+          <div class="vote-btn ${myVote === 'viral' ? 'selected-viral' : 'selected-flop'}" style="pointer-events:none; padding:9px 16px; border-radius:10px; border:1px solid; display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:600; width:auto;">
+            ${myVote === 'viral' ? '🔥 Called Viral' : '💀 Called Flop'}
+          </div>
+          <span class="trend-timer">${timerStr}</span>
+        </div>`;
+    } else {
+      bottomSection = `
+        <div class="vote-btns" id="vote-btns-${t.id}">
+          <button class="vote-btn vote-btn-viral" onclick="castVote('${t.id}','viral')">🔥 Goes Viral</button>
+          <button class="vote-btn vote-btn-flop"  onclick="castVote('${t.id}','flop')">💀 Flops</button>
+        </div>`;
+    }
   }
 
-  // Metrics
-  const m = r.metrics;
-  const metrics = [
-    { label:'Average Views',    val: (m.avgViews||0).toLocaleString() },
-    { label:'Engagement Rate',  val: (m.avgEngagement||0) + '%' },
-    { label:'Avg Completion',   val: (m.avgCompletion||0) + '%' },
-    { label:'View Trend',       val: (m.viewTrend > 0 ? '+':'')+m.viewTrend+'%', color: m.viewTrend > 0 ? 'var(--accent)' : m.viewTrend < 0 ? 'var(--red)' : '' },
-    { label:'Completion Trend', val: (m.compTrend > 0 ? '+':'')+m.compTrend+'pp', color: m.compTrend > 0 ? 'var(--accent)' : m.compTrend < -5 ? 'var(--amber)' : '' }
-  ];
-  document.getElementById('result-metrics').innerHTML = metrics.map(m =>
-    `<div class="flex justify-between items-center">
-      <span class="text-sm text-muted">${m.label}</span>
-      <span class="mono text-sm font-bold" style="${m.color?'color:'+m.color:''}">${m.val}</span>
-    </div>`
-  ).join('<div class="divider" style="margin:6px 0;"></div>');
+  return `
+    <div class="${cardClass}" id="card-${t.id}">
+      <div class="trend-meta">
+        <span class="badge badge-muted">${typeEmoji} ${t.type}</span>
+        ${resolved ? `<span class="badge ${t.result==='viral' ? 'badge-green' : 'badge-red'}">${t.result==='viral'?'🔥 Viral':'💀 Flopped'}</span>` : `<span class="badge badge-blue">⏳ Live</span>`}
+      </div>
+      <div class="trend-name">${escHtml(t.name)}</div>
+      <div class="trend-desc">${escHtml(t.description)}</div>
+      <div class="trend-scout mb-3">Scouted by <span>${escHtml(t.scoutName)}</span> · ${total} prediction${total!==1?'s':''}</div>
 
-  // Insights
-  const insightsEl = document.getElementById('result-insights');
-  if (r.insights?.length) {
-    insightsEl.innerHTML = r.insights.map(i =>
-      `<div class="insight-card">
-        <div class="insight-icon">${i.icon}</div>
-        <div><div class="insight-title">${i.title}</div><div class="insight-text">${i.text}</div></div>
-      </div>`
-    ).join('');
-  }
+      ${total > 0 ? `
+        <div class="vote-bar-wrap">
+          <div class="vote-bar-labels"><span style="color:var(--accent)">🔥 ${viralPct}%</span><span style="color:var(--red)">${100-viralPct}% 💀</span></div>
+          <div class="vote-bar"><div class="vote-bar-fill" style="width:${viralPct}%"></div></div>
+        </div>` : ''}
 
-  // Timing
-  if (r.optimalHour) {
-    document.getElementById('result-optimal-time').textContent = r.optimalHour.label;
-    document.getElementById('result-timing-reason').textContent = r.optimalHour.reason;
-  }
-}
+      ${bottomSection}
 
-// â”€â”€ FEEDBACK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-function showFeedbackForm() {
-  document.getElementById('feedback-form').classList.remove('hidden');
-  document.getElementById('feedback-form').style.display = 'flex';
-  document.getElementById('feedback-btn').classList.add('hidden');
-}
-
-async function submitFeedback() {
-  const body = {
-    action:      'submit_outcome',
-    token:       state.token,
-    analysisId:  state.lastAnalId,
-    actualViews:      parseInt(document.getElementById('fb-views').value)||0,
-    actualLikes:      parseInt(document.getElementById('fb-likes').value)||0,
-    actualComments:   parseInt(document.getElementById('fb-comments').value)||0,
-    actualShares:     parseInt(document.getElementById('fb-shares').value)||0,
-    actualCompletion: parseFloat(document.getElementById('fb-completion').value)||0
-  };
-
-  const r = await api({ body });
-  if (r.error) { toast(r.error, 'error'); return; }
-
-  toast('Brain updated! Thanks for the data ðŸ§ ', 'success');
-  document.getElementById('result-feedback').innerHTML = `
-    <div class="text-sm font-bold text-accent">âœ… Outcome submitted</div>
-    <div class="text-xs text-muted mt-1">The brain just got a little smarter. Keep running checks and submitting outcomes.</div>
-  `;
-}
-
-// â”€â”€ HISTORY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-async function loadHistory() {
-  const container = document.getElementById('history-content');
-  container.innerHTML = `<div class="empty"><div class="spinner" style="margin:0 auto 12px;"></div><div class="text-sm text-muted">Loading...</div></div>`;
-
-  const r = await api({ method:'GET', params:{ action:'history', token:state.token } });
-  if (r.error || !r.analyses?.length) {
-    container.innerHTML = `<div class="empty">
-      <div class="empty-icon">ðŸ“‹</div>
-      <div class="empty-title">No history yet</div>
-      <div class="empty-sub">Your past vibe checks will appear here.</div>
+      ${isActive && !myVote ? `<div class="${timerClass}" style="margin-top:8px; text-align:right;">${timerStr}</div>` : ''}
+      ${t.tiktokUrl ? `<a href="${t.tiktokUrl}" target="_blank" class="text-xs text-muted" style="display:inline-block; margin-top:8px;">🔗 View on TikTok</a>` : ''}
     </div>`;
+}
+
+async function castVote(trendId, vote) {
+  // Optimistic UI
+  state.myVotes[trendId] = vote;
+  const trend = state.trends.find(t => t.id === trendId);
+  if (trend) {
+    if (vote === 'viral') trend.viralVotes = (trend.viralVotes || 0) + 1;
+    else                  trend.flopVotes  = (trend.flopVotes  || 0) + 1;
+  }
+  renderArena();
+
+  const r = await api({ action:'predict', token: state.token, trendId, vote });
+  if (r.error) {
+    // Rollback
+    delete state.myVotes[trendId];
+    if (trend) {
+      if (vote === 'viral') trend.viralVotes = Math.max(0,(trend.viralVotes||1)-1);
+      else                  trend.flopVotes  = Math.max(0,(trend.flopVotes||1)-1);
+    }
+    renderArena();
+    toast(r.error, 'error');
+    return;
+  }
+  toast(vote === 'viral' ? '🔥 Called viral — now we wait.' : '💀 Called flop — bold move.', 'success');
+}
+
+// ── SCOUT ─────────────────────────────────────────────────
+async function submitScout() {
+  const name = document.getElementById('scout-name').value.trim();
+  const desc = document.getElementById('scout-desc').value.trim();
+  if (!name || !desc) { toast('Fill in the required fields', 'error'); return; }
+
+  const btn = document.getElementById('scout-btn');
+  const txt = document.getElementById('scout-btn-text');
+  const sp  = document.getElementById('scout-spinner');
+  btn.disabled = true; txt.classList.add('hidden'); sp.classList.remove('hidden');
+
+  const r = await api({
+    action:   'scout_submit',
+    token:    state.token,
+    name,
+    type:     document.getElementById('scout-type').value,
+    description: desc,
+    tiktokUrl:   document.getElementById('scout-url').value.trim(),
+    daysOpen: parseInt(document.getElementById('scout-days').value)
+  });
+
+  btn.disabled = false; txt.classList.remove('hidden'); sp.classList.add('hidden');
+
+  if (r.error) { toast(r.error, 'error'); return; }
+
+  // Reset form
+  document.getElementById('scout-name').value = '';
+  document.getElementById('scout-desc').value = '';
+  document.getElementById('scout-url').value  = '';
+
+  toast('🔭 Signal submitted! Others can now predict on it.', 'success');
+  showScreen('arena');
+  loadArena();
+}
+
+// ── MY RESULTS ────────────────────────────────────────────
+async function loadResults() {
+  const r = await api({ action:'get_my_predictions', token: state.token });
+  const list = document.getElementById('results-list');
+
+  if (r.error || !r.predictions?.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">📋</div><div class="empty-title">No calls yet</div><div class="empty-sub">Head to the Arena and start predicting.</div><button class="btn btn-primary mt-3" onclick="showScreen('arena')">Go to Arena →</button></div>`;
     return;
   }
 
-  const stateColors = { HOT:'var(--accent)', BUILDING:'var(--blue)', COOLING:'var(--amber)', RESET:'var(--red)' };
-  const stateEmojis = { HOT:'ðŸ”¥', BUILDING:'âš¡', COOLING:'ðŸ˜´', RESET:'ðŸ”' };
-
-  container.innerHTML = `<div style="display:flex;flex-direction:column;gap:8px;">` +
-    r.analyses.map(a => {
-      const d = new Date(a.createdAt);
-      const dateStr = d.toLocaleDateString('en-NG',{day:'numeric',month:'short',year:'numeric'});
-      return `<div class="history-item">
-        <div>
-          <div class="flex items-center gap-2">
-            <span style="color:${stateColors[a.state]||'var(--text)'}">${stateEmojis[a.state]||'ðŸ“Š'}</span>
-            <span class="text-sm font-bold" style="color:${stateColors[a.state]||'var(--text)'}">${a.label||a.state}</span>
+  list.innerHTML = r.predictions.map(p => {
+    const isPending = p.status === 'pending';
+    const isCorrect = p.isCorrect;
+    const rowClass  = isPending ? 'result-item pending' : isCorrect ? 'result-item correct' : 'result-item incorrect';
+    return `
+      <div class="${rowClass}">
+        <div style="flex:1;">
+          <div class="text-sm font-bold mb-1">${escHtml(p.trendName)}</div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="badge ${p.vote==='viral'?'badge-green':'badge-red'}">${p.vote==='viral'?'🔥 Called Viral':'💀 Called Flop'}</span>
+            ${isPending ? '<span class="badge badge-muted">⏳ Pending</span>' : (isCorrect ? '<span class="badge badge-green">✓ Correct</span>' : '<span class="badge badge-red">✗ Missed</span>')}
           </div>
-          <div class="history-date">${dateStr} Â· Score: ${a.score}</div>
+          <div class="text-xs text-muted mt-1">${new Date(p.submittedAt).toLocaleDateString('en-NG',{day:'numeric',month:'short'})}</div>
         </div>
-        ${a.hasFeedback ? '<span class="text-xs text-accent">âœ“ Trained</span>' : '<span class="text-xs text-muted">Pending</span>'}
+        <div class="text-right">
+          ${!isPending ? `<div class="points-earned ${p.pointsEarned > 0 ? 'pos' : 'neg'}" style="font-size:1rem;">${p.pointsEarned > 0 ? '+' : ''}${p.pointsEarned} pts</div>` : ''}
+        </div>
       </div>`;
-    }).join('') + '</div>';
+  }).join('');
 }
 
-// â”€â”€ PAYSTACK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-function setupPaystack(callback, cfg) {
-  if (!window.PaystackPop) {
-    const s = document.createElement('script');
-    s.src = 'https://js.paystack.co/v1/inline.js';
-    s.onload = () => initPaystack(callback, cfg);
-    document.head.appendChild(s);
-  } else { initPaystack(callback, cfg); }
+// ── MY RANK ───────────────────────────────────────────────
+async function loadRank() {
+  const r = await api({ action:'get_profile', token: state.token });
+  if (r.error) { if (r.error.includes('expired')) logout(); return; }
+
+  const score = r.score || 0;
+  const title = getTitle(score);
+  const next  = getNextTitle(score);
+
+  document.getElementById('rank-greeting').textContent = r.name?.split(' ')[0] || '';
+  document.getElementById('rank-score').textContent = score;
+  document.getElementById('rank-title').textContent = title.name;
+  document.getElementById('rank-title-sub').textContent = title.sub;
+
+  document.getElementById('share-score').textContent = score;
+  document.getElementById('share-title').textContent = title.name;
+  const acc = r.predictionsMade > 0 ? Math.round((r.predictionsCorrect / r.predictionsMade) * 100) : 0;
+  document.getElementById('share-accuracy').textContent = `${acc}% accuracy · ${r.predictionsMade} calls`;
+
+  document.getElementById('rank-predictions').textContent = r.predictionsMade || 0;
+  document.getElementById('rank-accuracy').textContent = acc + '%';
+  document.getElementById('rank-scouts').textContent = r.scoutsSubmitted || 0;
+  document.getElementById('rank-streak').textContent = (r.streak || 0) + '🔥';
+
+  // Title track
+  const track = document.getElementById('title-track');
+  track.innerHTML = TITLES.map(tier => {
+    const unlocked = score >= tier.pts;
+    const current  = title.pts === tier.pts;
+    const cls = current ? 'title-step current' : unlocked ? 'title-step unlocked' : 'title-step';
+    return `<div class="${cls}">
+      <div style="font-size:1.1rem;">${current ? '⭐' : unlocked ? '✓' : '○'}</div>
+      <div style="flex:1;"><div class="title-step-name" style="${current?'color:var(--accent)':''}">${tier.name}</div></div>
+      <div class="title-step-pts">${tier.pts === 0 ? 'Start' : tier.pts + ' pts'}</div>
+    </div>`;
+  }).join('');
+
+  loadLeaderboard(r.userId);
 }
 
-function initPaystack(callback, cfg) {
-  const email = document.getElementById('reg-email').value;
-  const btn = document.getElementById('payBtn');
-  btn.onclick = () => {
-    const handler = PaystackPop.setup({
-      key:      cfg.paystackPublicKey,
-      email,
-      amount:   (cfg.amount || 2000) * 100,
-      currency: 'NGN',
-      ref:      'PULSE_' + Date.now(),
-      onClose:  () => {},
-      callback: (res) => {
-        document.getElementById('payModal').classList.add('hidden');
-        callback(res.reference);
-      }
-    });
-    handler.openIframe();
-  };
+async function loadLeaderboard(myId) {
+  const r = await api({ action:'get_leaderboard' });
+  const list = document.getElementById('leaderboard-list');
+  if (r.error || !r.leaders?.length) {
+    list.innerHTML = `<div class="text-xs text-muted text-center" style="padding:16px;">No rankings yet — start predicting!</div>`;
+    return;
+  }
+  list.innerHTML = r.leaders.map((u, i) => {
+    const t = getTitle(u.score);
+    const isMe = u.id === myId;
+    return `<div class="lb-row ${isMe ? 'is-me' : ''}">
+      <div class="lb-rank ${i < 3 ? 'top' : ''}">${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i+1}</div>
+      <div><div class="lb-name">${escHtml(u.name)}${isMe ? ' <span class="badge badge-muted" style="font-size:0.65rem;">you</span>' : ''}</div><div class="lb-title-small">${t.name}</div></div>
+      <div class="lb-score">${u.score}</div>
+    </div>`;
+  }).join('');
 }
 
-// â”€â”€ SCREEN ROUTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function shareCard() {
+  const score = document.getElementById('rank-score').textContent;
+  const title = document.getElementById('rank-title').textContent;
+  const text  = `My Pulse score is ${score} — I'm a ${title}. Call TikTok trends before the world does 👁️ #PulseArena`;
+  if (navigator.share) {
+    navigator.share({ title: 'My Pulse Score', text }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard!', 'success'));
+  }
+}
+
+// ── SCREEN ROUTER ─────────────────────────────────────────
 function showScreen(name) {
-  state.prevScreen = document.querySelector('.screen.active')?.id?.replace('screen-','') || 'dashboard';
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(`screen-${name}`)?.classList.add('active');
-
-  // Update bottom nav
   document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
 
-  if (name === 'history') loadHistory();
-  if (name === 'check') { goStep(1); buildVideoRows(); }
+  if (name === 'results') loadResults();
+  if (name === 'rank')    loadRank();
+  if (name === 'arena')   { loadArena(); }
 }
 
-function goBack() {
-  showScreen(state.prevScreen || 'dashboard');
+// ── HELPERS ───────────────────────────────────────────────
+function getDaysLeft(closesAt) {
+  if (!closesAt) return 0;
+  return Math.max(0, Math.ceil((new Date(closesAt) - Date.now()) / 86400000));
 }
 
-// â”€â”€ HELPERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function getTimerStr(closesAt) {
+  if (!closesAt) return '';
+  const ms   = new Date(closesAt) - Date.now();
+  if (ms <= 0) return 'Closed';
+  const hrs  = Math.floor(ms / 3600000);
+  const days = Math.floor(hrs / 24);
+  if (days > 0) return `${days}d left`;
+  return `${hrs}h left`;
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 function showError(id, msg) {
   const el = document.getElementById(id);
-  el.textContent = msg;
-  el.classList.remove('hidden');
+  el.textContent = msg; el.classList.remove('hidden');
 }
 
 function toast(msg, type = '') {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'show ' + type;
+  t.textContent = msg; t.className = 'show ' + type;
   setTimeout(() => t.className = '', 3200);
 }
 </script>
